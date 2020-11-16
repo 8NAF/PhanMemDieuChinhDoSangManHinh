@@ -2,4 +2,13 @@
     <string name="app_name">Dark Mode</string>
     <string name="moon">Moon image</string>
     <string name="power_button">Power buttoon image</string>
+	<string name="home">Home</string>
+	<string name="wallpaper">Wallpaper</string>
+	<string name="blue_light">What is blue light ?</string>
+	<string name="language">Language</string>
+	<string name="about_us">About us</string>
+	<string name="on">ON</string>
+	<string name="off">OFF</string>
+	<string name="open">open</string>
+	<string name="close">close</string>
 </resources>

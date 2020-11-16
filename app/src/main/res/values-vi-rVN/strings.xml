@@ -3,4 +3,13 @@
     <string name="app_name">Chế độ đêm</string>
     <string name="moon">Hình ảnh mặt trăng</string>
     <string name="power_button">Hình ảnh nút khởi động</string>
+	<string name="home">Nhà</string>
+	<string name="wallpaper">Hình nền</string>
+	<string name="blue_light">Ánh sáng xanh lầ gì</string>
+	<string name="language">Ngôn ngữ</string>
+	<string name="about_us">Thông tin nhà phát triển</string>
+	<string name="on">BẬT</string>
+	<string name="off">TẮT</string>
+	<string name="open">mở</string>
+	<string name="close">đóng</string>
 </resources>
