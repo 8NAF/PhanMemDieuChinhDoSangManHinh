@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Dark Mode</string>
-    <string name="moon">Moon image</string>
-    <string name="power_button">Power buttoon image</string>
+	<string name="app_name">Dark Mode</string>
+	<string name="moon">Moon image</string>
+	<string name="power_button">Power buttoon image</string>
 	<string name="home">Home</string>
 	<string name="wallpaper">Wallpaper</string>
 	<string name="blue_light">What is blue light ?</string>

@@ -25,7 +25,7 @@ public class StartActivity extends AppCompatActivity {
 		this.setContentView(R.layout.activity_start);
 
 		this.mapped();
-		this.setEvent();
+		this.setListener();
 	}
 
 	//endregion
@@ -34,12 +34,12 @@ public class StartActivity extends AppCompatActivity {
 	protected void mapped() {
 		this.imbPower = (ImageButton) findViewById(R.id.imb_power);
 	}
-	protected void setEvent() {
+	protected void setListener() {
 		this.imbPower.setOnClickListener(new imbPower_OnClickListener());
 	}
 
 	//endregion
-	//region Event Classes
+	//region Listener Classes
 
 	class imbPower_OnClickListener implements View.OnClickListener {
 		@Override
