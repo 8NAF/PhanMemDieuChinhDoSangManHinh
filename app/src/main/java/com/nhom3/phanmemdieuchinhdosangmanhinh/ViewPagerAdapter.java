@@ -10,14 +10,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
 
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+            super(fm, behavior);
     }
 
-    @NonNull
-    @Override
+    @NonNull @Override
     public Fragment getItem(int position) {
         switch (position) {
-
             case 1:
                 return new WallpaperFragment();
             case 0:
@@ -31,18 +29,16 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         return 2;
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public CharSequence getPageTitle(int position) {
-        String title = "";
-        switch (position){
+
+        switch (position) {
             case 0:
-                title = "Home";
-                break;
+                return "Home";
             case 1:
-                title = "Wallpaper";
-                break;
+                return "Wallpaper";
+            default:
+                return "";
         }
-        return title;
     }
 }

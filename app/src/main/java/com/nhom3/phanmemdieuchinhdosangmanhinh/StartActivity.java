@@ -11,7 +11,12 @@ import android.widget.ImageButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class StartActivity extends AppCompatActivity {
-	private TabLayout tabLayout;
+	//region Attributes
+
+	ImageButton imbPower;
+
+	//endregion
+	//region Override Methods
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,9 +24,22 @@ public class StartActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_start);
 
-		ImageButton imbPower = (ImageButton) findViewById(R.id.imb_power);
-		imbPower.setOnClickListener(new imbPower_OnClickListener());
+		this.mapped();
+		this.setEvent();
 	}
+
+	//endregion
+	//region Helper Methods
+
+	protected void mapped() {
+		this.imbPower = (ImageButton) findViewById(R.id.imb_power);
+	}
+	protected void setEvent() {
+		this.imbPower.setOnClickListener(new imbPower_OnClickListener());
+	}
+
+	//endregion
+	//region Event Classes
 
 	class imbPower_OnClickListener implements View.OnClickListener {
 		@Override
@@ -33,5 +51,6 @@ public class StartActivity extends AppCompatActivity {
 		}
 	}
 
+	//endregion
 }
 
