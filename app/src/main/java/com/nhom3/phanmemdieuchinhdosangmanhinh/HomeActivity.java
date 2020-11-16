@@ -21,8 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		ImageView myBackGround = (ImageView) findViewById(R.id.imv_background);
-		myBackGround.setImageResource(R.drawable.nighlight);
+
 
 		ImageButton btnLogin;
 		btnLogin = (ImageButton) findViewById(R.id.imb_power);

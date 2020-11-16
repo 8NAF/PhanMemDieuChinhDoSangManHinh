@@ -7,15 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <ImageView
-        android:id="@+id/imv_background"
-        android:layout_width="418dp"
-        android:layout_height="732dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageButton
         android:id="@+id/imb_power"
         android:layout_width="103dp"
