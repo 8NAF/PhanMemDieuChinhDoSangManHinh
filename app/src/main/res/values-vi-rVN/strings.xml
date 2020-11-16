@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Chế độ đêm</string>
+    <string name="moon">Hình ảnh mặt trăng</string>
+    <string name="power_button">Hình ảnh nút khởi động</string>
+</resources>
