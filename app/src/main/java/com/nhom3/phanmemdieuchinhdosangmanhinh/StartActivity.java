@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.google.android.material.tabs.TabLayout;
-
 public class StartActivity extends AppCompatActivity {
 	//region Attributes
 
@@ -47,7 +45,6 @@ public class StartActivity extends AppCompatActivity {
 			Intent intent = new Intent(StartActivity.this, MainActivity.class);
 			StartActivity.this.startActivity(intent);
 			StartActivity.this.finish();
-
 		}
 	}
 
