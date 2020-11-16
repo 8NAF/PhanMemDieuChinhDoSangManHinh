@@ -17,21 +17,21 @@ public class StartActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_start);
+		this.setContentView(R.layout.activity_start);
 
-		ImageButton btnLogin;
-		btnLogin = (ImageButton) findViewById(R.id.imb_power);
-
-		btnLogin.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent(StartActivity.this, MainActivity.class);
-				startActivity(intent);
-			}
-		});
-
-
-
+		ImageButton imbPower = (ImageButton) findViewById(R.id.imb_power);
+		imbPower.setOnClickListener(new imbPower_OnClickListener());
 	}
+
+	class imbPower_OnClickListener implements View.OnClickListener {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(StartActivity.this, MainActivity.class);
+			StartActivity.this.startActivity(intent);
+			StartActivity.this.finish();
+
+		}
+	}
+
 }
 
