@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class HomeActivity extends AppCompatActivity {
+	private TabLayout tabLayout;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
