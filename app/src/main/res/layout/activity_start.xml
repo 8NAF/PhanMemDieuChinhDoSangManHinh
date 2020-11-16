@@ -8,6 +8,17 @@
     android:background="@drawable/start_background"
     tools:context=".StartActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/moon"
+        android:contentDescription="@string/moon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/imb_power"
         android:layout_width="wrap_content"
@@ -18,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="Hình ảnh nút power"
+        android:contentDescription="@string/power_button"
         app:srcCompat="@drawable/power_button" />
 
 

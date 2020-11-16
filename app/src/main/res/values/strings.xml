@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">PhanMemDieuChinhDoSangManHinh</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="home_fragment">Home fragment</string>
-    <string name="wallpaper_fragment">Wallpaper fragment</string>
+    <string name="app_name">Dark Mode</string>
+    <string name="home_fragment" translatable="false">Home fragment</string>
+    <string name="wallpaper_fragment" translatable="false">Wallpaper fragment</string>
+    <string name="moon">Moon image</string>
+    <string name="power_button">Power buttoon image</string>
 </resources>
