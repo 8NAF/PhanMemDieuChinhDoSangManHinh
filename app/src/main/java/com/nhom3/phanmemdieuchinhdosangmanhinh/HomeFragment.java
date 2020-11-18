@@ -4,12 +4,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
 
 public class HomeFragment extends Fragment {
+
+	//region No Use
 
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,10 +55,36 @@ public class HomeFragment extends Fragment {
 		}
 	}
 
+	//endregion
+	//region Attributes
+
+	SeekBar skbRed;
+	SeekBar skbGreen;
+	SeekBar skbBlue;
+
+	//endregion
+	//region Override Methods
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
+
+		View view = inflater.inflate(R.layout.fragment_home, container, false);
+		this.mapped(view);
+
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_home, container, false);
+		return view;
 	}
+
+	//endregion
+	//region Helper Methods
+
+	private void mapped(View view) {
+
+		this.skbRed = view.findViewById(R.id.skb_red);
+		this.skbGreen = view.findViewById(R.id.skb_green);
+		this.skbBlue = view.findViewById(R.id.skb_blue);
+	}
+
+	//endregion
 }

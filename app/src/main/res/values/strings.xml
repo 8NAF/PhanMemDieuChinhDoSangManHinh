@@ -12,4 +12,6 @@
 	<string name="open">open</string>
 	<string name="close">close</string>
 	<string name="set_wallpaper">Set as wallpaper</string>
+	<string name="max_rgb" translatable="false">255</string>
+	<string name="min_rgb" translatable="false">0</string>
 </resources>

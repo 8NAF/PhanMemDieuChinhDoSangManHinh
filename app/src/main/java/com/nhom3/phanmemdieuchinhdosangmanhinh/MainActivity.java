@@ -1,9 +1,13 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.GridView;
+import android.widget.SeekBar;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 	TabItem titHome;
 	TabItem titWallpaper;
 	ViewPager vpgMain;
+	Switch swtOnOff;
+
+	MenuItem menuItem;
 
 	//endregion
 	//region Override Methods
@@ -40,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 		this.setSupportActionBar(this.tlbMain);
 		this.setAdapter();
 		this.setListener();
+		this.addListener();
+		ngvMain.setItemIconTintList(null);
 	}
 
 	//endregion
@@ -53,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
 		this.titHome = this.findViewById(R.id.tit_home);
 		this.titWallpaper = this.findViewById(R.id.tit_wallpaper);
 		this.vpgMain = this.findViewById(R.id.vpg_main);
+		this.swtOnOff = this.findViewById(R.id.swt_on_off);
 	}
 
-	protected void setAdapter() {
+	void setAdapter() {
 		ViewPagerAdaptor viewPagerAdaptor = new ViewPagerAdaptor(
 			this.getSupportFragmentManager(),
 			FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
@@ -64,9 +74,13 @@ public class MainActivity extends AppCompatActivity {
 		this.vpgMain.setAdapter(viewPagerAdaptor);
 	}
 
-	protected void setListener() {
-		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
+	void setListener() {
 		this.ngvMain.setNavigationItemSelectedListener(new ngvMain_NavigationItemSelectedListener());
+		this.swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+	}
+
+	void addListener() {
+		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
 		this.tloMain.addOnTabSelectedListener(new tloMain_OnTabSelectedListener());
 		this.vpgMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(this.tloMain));
 	}
@@ -113,6 +127,16 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			return false;
+		}
+	}
+	class swtOnOff_OnCheckedChangeListener implements CompoundButton.OnCheckedChangeListener {
+
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+			int idOnOff = (isChecked) ? R.string.on : R.string.off;
+			String textOnOff = MainActivity.this.getString(idOnOff);
+			MainActivity.this.swtOnOff.setText(textOnOff);
 		}
 	}
 

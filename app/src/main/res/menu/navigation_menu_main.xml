@@ -2,13 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<item
-		android:id="@+id/mni_language"
-		android:title="@string/language" />
-
-	<item
+		android:icon="@drawable/ic_info"
 		android:id="@+id/mni_blue_light"
 		android:title="@string/blue_light" />
 	<item
+		android:id="@+id/mni_language"
+		android:icon="@drawable/ic_language"
+		android:title="@string/language" />
+	<item
+		android:icon="@drawable/ic_about_us"
 		android:id="@+id/mni_about_us"
 		android:title="@string/about_us" />
 </menu>

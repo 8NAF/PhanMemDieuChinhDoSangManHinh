@@ -15,13 +15,20 @@
 		android:id="@+id/tlb_main"
 		android:layout_width="0dp"
 		android:layout_height="56dp"
-		app:titleTextColor="@color/white"
 		android:background="@color/blue_500"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
+		app:layout_constraintTop_toTopOf="parent"
+		app:titleTextColor="@color/white">
 
-
+		<Switch
+			android:id="@+id/swt_on_off"
+			android:layout_alignParentEnd="true"
+			android:layout_gravity="end"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/off"/>
 
 	</androidx.appcompat.widget.Toolbar>
 
@@ -37,7 +44,8 @@
 	<com.google.android.material.tabs.TabLayout
 		android:id="@+id/tlo_main"
 		android:layout_width="match_parent"
-		android:layout_height="48dp"
+		android:layout_height="wrap_content"
+		app:tabInlineLabel="true"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +55,12 @@
 			android:id="@+id/tit_home"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:icon="@drawable/ic_home"
 			android:text="@string/home" />
 
 		<com.google.android.material.tabs.TabItem
 			android:id="@+id/tit_wallpaper"
+			android:icon="@drawable/ic_wallpaper"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/wallpaper" />
