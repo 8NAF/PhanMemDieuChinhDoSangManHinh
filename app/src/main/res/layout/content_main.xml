@@ -20,17 +20,18 @@
 		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:titleTextColor="@color/white">
+		app:titleTextColor="@color/white" />
 
-		<Switch
-			android:id="@+id/swt_on_off"
-			android:layout_alignParentEnd="true"
-			android:layout_gravity="end"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/off"/>
-
-	</androidx.appcompat.widget.Toolbar>
+	<com.google.android.material.switchmaterial.SwitchMaterial
+		android:id="@+id/swt_on_off"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentEnd="true"
+		android:layout_gravity="end"
+		android:text="@string/off"
+		app:layout_constraintBottom_toBottomOf="@+id/tlb_main"
+		app:layout_constraintEnd_toEndOf="@+id/tlb_main"
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<androidx.viewpager.widget.ViewPager
 		android:id="@+id/vpg_main"

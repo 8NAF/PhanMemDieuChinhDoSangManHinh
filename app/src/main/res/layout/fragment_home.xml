@@ -11,7 +11,7 @@
 		android:layout_height="match_parent">
 
 		<SeekBar
-			android:id="@+id/skb_red"
+			android:id="@+id/skb_alpha"
 			android:layout_width="0dp"
 			android:layout_height="20dp"
 			android:layout_marginStart="20dp"
@@ -20,6 +20,18 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
+			android:max="200"/>
+
+		<SeekBar
+			android:id="@+id/skb_red"
+			android:layout_width="0dp"
+			android:layout_height="20dp"
+			android:layout_marginStart="20dp"
+			android:layout_marginTop="30dp"
+			android:layout_marginEnd="20dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/skb_alpha"
 			android:max="@string/max_rgb"/>
 
 		<SeekBar
@@ -29,10 +41,10 @@
 			android:layout_marginStart="20dp"
 			android:layout_marginTop="30dp"
 			android:layout_marginEnd="20dp"
+			android:max="@string/max_rgb"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/skb_red"
-			android:max="@string/max_rgb"/>
+			app:layout_constraintTop_toBottomOf="@+id/skb_red" />
 
 		<SeekBar
 			android:id="@+id/skb_blue"
@@ -41,10 +53,11 @@
 			android:layout_marginStart="20dp"
 			android:layout_marginTop="30dp"
 			android:layout_marginEnd="20dp"
+			android:max="@string/max_rgb"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/skb_green"
-			android:max="@string/max_rgb"/>
+			app:layout_constraintTop_toBottomOf="@+id/skb_green" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

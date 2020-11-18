@@ -66,7 +66,7 @@ public class WallpaperFragment extends Fragment {
 	//endregion
 	//region Attributes
 
-	Button btnSetWallpaper;
+
 	GridView grvWallpaper;
 
 	//endregion
@@ -96,7 +96,6 @@ public class WallpaperFragment extends Fragment {
 
 	protected void mapped(View view) {
 		this.grvWallpaper = view.findViewById(R.id.grv_wallpaper);
-		this.btnSetWallpaper = view.findViewById(R.id.btn_set_wallpaper);
 	}
 
 	//endregion

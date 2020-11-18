@@ -1,13 +1,8 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.GridView;
-import android.widget.SeekBar;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -31,9 +27,7 @@ public class MainActivity extends AppCompatActivity {
 	TabItem titHome;
 	TabItem titWallpaper;
 	ViewPager vpgMain;
-	Switch swtOnOff;
-
-	MenuItem menuItem;
+	SwitchMaterial swtOnOff;
 
 	//endregion
 	//region Override Methods
@@ -41,14 +35,14 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		this.setContentView(R.layout.activity_main);
 
 		this.mapped();
 		this.setSupportActionBar(this.tlbMain);
 		this.setAdapter();
 		this.setListener();
 		this.addListener();
-		ngvMain.setItemIconTintList(null);
+		this.ngvMain.setItemIconTintList(null); //Đặt null để có thể thêm icon cho các menu item
 	}
 
 	//endregion

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,9 +80,9 @@ public class HomeFragment extends Fragment {
 
 	private void mapped(View view) {
 
-		this.skbRed = view.findViewById(R.id.skb_red);
-		this.skbGreen = view.findViewById(R.id.skb_green);
-		this.skbBlue = view.findViewById(R.id.skb_blue);
+		this.skbRed = view.findViewById(R.id.skb_alpha);
+		this.skbGreen = view.findViewById(R.id.skb_red);
+		this.skbBlue = view.findViewById(R.id.skb_green);
 	}
 
 	//endregion
