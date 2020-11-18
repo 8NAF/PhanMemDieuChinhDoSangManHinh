@@ -2,6 +2,8 @@ package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -44,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
 	//region Helper Methods
 
 	protected void mapped() {
-		this.dwlMain = (DrawerLayout) this.findViewById(R.id.dwl_main);
-		this.tlbMain = (Toolbar) this.findViewById(R.id.tlb_main);
-		this.ngvMain = (NavigationView) this.findViewById(R.id.ngv_main);
-		this.tloMain = (TabLayout) this.findViewById(R.id.tlo_main);
-		this.titHome = (TabItem) this.findViewById(R.id.tit_home);
-		this.titWallpaper = (TabItem) this.findViewById(R.id.tit_wallpaper);
-		this.vpgMain = (ViewPager) this.findViewById(R.id.vpg_main);
+		this.dwlMain = this.findViewById(R.id.dwl_main);
+		this.tlbMain = this.findViewById(R.id.tlb_main);
+		this.ngvMain = this.findViewById(R.id.ngv_main);
+		this.tloMain = this.findViewById(R.id.tlo_main);
+		this.titHome = this.findViewById(R.id.tit_home);
+		this.titWallpaper = this.findViewById(R.id.tit_wallpaper);
+		this.vpgMain = this.findViewById(R.id.vpg_main);
 	}
 
 	protected void setAdapter() {

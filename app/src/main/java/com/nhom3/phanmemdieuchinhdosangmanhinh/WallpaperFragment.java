@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
+
+import java.lang.reflect.Array;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +20,8 @@ import android.view.ViewGroup;
  *
  */
 public class WallpaperFragment extends Fragment {
+
+	//region No Use
 
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,10 +63,43 @@ public class WallpaperFragment extends Fragment {
 		}
 	}
 
+	//endregion
+	//region Attributes
+
+	Button btnSetWallpaper;
+	GridView grvWallpaper;
+
+	//endregion
+	//region Override Methods
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_wallpaper, container, false);
+
+		View view = inflater.inflate(R.layout.fragment_wallpaper,container,false);
+		this.mapped(view);
+
+		//Todo: Cần thay đổi mảng string thành danh sách các hình ảnh
+		String[] array = {"A", "B", "C"};
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+			this.getActivity(),
+			android.R.layout.simple_list_item_1,
+			array
+		);
+		this.grvWallpaper.setAdapter(arrayAdapter);
+
+		return view;
 	}
+
+	//endregion
+	//region Helper Methods
+
+	protected void mapped(View view) {
+		this.grvWallpaper = view.findViewById(R.id.grv_wallpaper);
+		this.btnSetWallpaper = view.findViewById(R.id.btn_set_wallpaper);
+	}
+
+	//endregion
+
+
 }
