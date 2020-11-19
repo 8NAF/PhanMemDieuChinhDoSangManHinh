@@ -2,57 +2,60 @@ package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 
 public class SharedMemory {
-	private SharedPreferences mSharedPreferences;
+
+	private SharedPreferences sharedPreferences;
+	private Context context;
 
 	public SharedMemory(Context context) {
-		mSharedPreferences = context.getSharedPreferences("SCREEN_FILTER_PREF", Context.MODE_PRIVATE);
+		this.context = context;
+		sharedPreferences = context.getSharedPreferences("SCREEN_FILTER", Context.MODE_PRIVATE);
 	}
 
 	private int getValue(String prop, int def) {
-		return mSharedPreferences.getInt(prop, def);
+		return sharedPreferences.getInt(prop, def);
+	}
+	private void setValue(String value, int v) {
+		sharedPreferences.edit().putInt(value, v).apply();
 	}
 
 	public int getAlpha() {
 		return getValue("alpha", 0x33);
 	}
-
 	public int getRed() {
-		return getValue("red", 0x00);
+		return getValue("red", 0);
 	}
-
 	public int getGreen() {
-		return getValue("green", 0x00);
+		return getValue("green", 0);
 	}
-
 	public int getBlue() {
-		return getValue("blue", 0x00);
+		return getValue("blue", 0);
 	}
-
-	private void setValue(String value, int v) {
-		mSharedPreferences.edit().putInt(value, v).apply();
+	public int getColor() {
+		return Color.argb(getAlpha(), getRed(), getGreen(), getBlue());
+	}
+	public String getTextSwitch() {
+		String defaultValue = context.getString(R.string.off);
+		return sharedPreferences.getString("text_switch", defaultValue);
 	}
 
 	public void setAlpha(int val) {
 		setValue("alpha", val);
 	}
-
 	public void setRed(int val) {
 		setValue("red", val);
 	}
-
 	public void setGreen(int val) {
 		setValue("green", val);
 	}
-
 	public void setBlue(int val) {
 		setValue("blue", val);
 	}
-
-	public int getColor() {
-		return Color.argb(getAlpha(), getRed(), getGreen(), getBlue());
+	public void setTextSwitch(String text) {
+		sharedPreferences.edit().putString("text_switch", text).apply();
 	}
 
 }

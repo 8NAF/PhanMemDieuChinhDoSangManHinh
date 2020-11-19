@@ -1,5 +1,6 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -7,18 +8,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -54,70 +51,17 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 
+		//Ánh xạ các view vào các attribute
 		this.mapped();
+
+		//Khởi tạo giá trị ban đầu cho các seek bar, switch và mSharedMemory
+		this.initialize();
+
 		this.setSupportActionBar(this.tlbMain);
-		this.ngvMain.setItemIconTintList(null); //Đặt null để có thể thêm icon cho các menu item
+		//Đặt null để NavigationView cho phép thay đổi icon của các menu item
+		this.ngvMain.setItemIconTintList(null);
+
 		this.addOrSetListener();
-
-		mSharedMemory = new SharedMemory(this);
-
-		SeekBar.OnSeekBarChangeListener changeListener = new SeekBar.OnSeekBarChangeListener() {
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				mSharedMemory.setAlpha(skbAlpha.getProgress());
-				mSharedMemory.setRed(skbRed.getProgress());
-				mSharedMemory.setGreen(skbGreen.getProgress());
-				mSharedMemory.setBlue(skbBlue.getProgress());
-
-				if (ScreenFilterService.STATE == ScreenFilterService.STATE_ACTIVE) {
-					Intent i =new Intent(MainActivity.this, ScreenFilterService.class);
-					startService(i);
-				}
-
-				swtOnOff.setChecked(ScreenFilterService.STATE == ScreenFilterService.STATE_ACTIVE);
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-
-			}
-		};
-
-		skbAlpha.setOnSeekBarChangeListener(changeListener);
-		skbRed.setOnSeekBarChangeListener(changeListener);
-		skbGreen.setOnSeekBarChangeListener(changeListener);
-		skbBlue.setOnSeekBarChangeListener(changeListener);
-
-		swtOnOff.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i =new Intent(MainActivity.this, ScreenFilterService.class);
-				if (ScreenFilterService.STATE == ScreenFilterService.STATE_ACTIVE) {
-					stopService(i);
-				} else {
-					if(Build.VERSION.SDK_INT >= 23) {
-						if (!Settings.canDrawOverlays(MainActivity.this)) {
-							Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-									Uri.parse("package:" + getPackageName()));
-							startActivityForResult(intent, 1234);
-						} else {
-							startService(i);
-						}
-					}
-					else
-					{
-						startService(i);
-					}
-				}
-
-				refresh();
-			}
-		});
 
 	}
 
@@ -125,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 		this.tloMain.getTabAt(0).select();
-		swtOnOff.setChecked(ScreenFilterService.STATE == ScreenFilterService.STATE_ACTIVE);
+
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1234) {
-			if (resultCode == RESULT_OK) {
-				Intent i =new Intent(MainActivity.this, ScreenFilterService.class);
+			if (resultCode == Activity.RESULT_OK) {
+				Intent i = new Intent(MainActivity.this, ScreenFilterService.class);
 				startService(i);
 			}
 		}
@@ -143,21 +87,40 @@ public class MainActivity extends AppCompatActivity {
 	//region Helper Methods
 
 	protected void mapped() {
-		this.tlbMain = this.findViewById(R.id.tlb_main);
+		tlbMain = this.findViewById(R.id.tlb_main);
 
-		this.dwlMain = this.findViewById(R.id.dwl_main);
-		this.ngvMain = this.findViewById(R.id.ngv_main);
+		dwlMain = this.findViewById(R.id.dwl_main);
+		ngvMain = this.findViewById(R.id.ngv_main);
 
-		this.tloMain = this.findViewById(R.id.tlo_main);
-		this.titHome = this.findViewById(R.id.tit_home);
-		this.titWallpaper = this.findViewById(R.id.tit_wallpaper);
+		tloMain = this.findViewById(R.id.tlo_main);
+		titHome = this.findViewById(R.id.tit_home);
+		titWallpaper = this.findViewById(R.id.tit_wallpaper);
 
-		this.swtOnOff = this.findViewById(R.id.swt_on_off);
-		this.skbAlpha = this.findViewById(R.id.skbAlpha);
-		this.skbRed = this.findViewById(R.id.skbRed);
-		this.skbGreen = this.findViewById(R.id.skbGreen);
-		this.skbBlue = this.findViewById(R.id.skbBlue);
+		swtOnOff = this.findViewById(R.id.swt_on_off);
+		skbAlpha = this.findViewById(R.id.skbAlpha);
+		skbRed = this.findViewById(R.id.skbRed);
+		skbGreen = this.findViewById(R.id.skbGreen);
+		skbBlue = this.findViewById(R.id.skbBlue);
+	}
 
+	void initialize() {
+
+		mSharedMemory = new SharedMemory(this);
+
+		skbAlpha.setProgress(mSharedMemory.getAlpha());
+		skbRed.setProgress(mSharedMemory.getRed());
+		skbGreen.setProgress(mSharedMemory.getGreen());
+		skbBlue.setProgress(mSharedMemory.getBlue());
+
+		swtOnOff.setText(mSharedMemory.getTextSwitch());
+		if (swtOnOff.getText().equals(getString(R.string.on))) {
+			//Method setChecked sẽ không có hiệu lực nếu switch có chứa sự kiện OnCheckedChangeListener
+			//Vì vậy cần set sự kiện OnCheckedChangeListener null trước khi call setChecked
+			//Sau đó set lại sự kiện cho switch
+			swtOnOff.setOnCheckedChangeListener(null);
+			swtOnOff.setChecked(true);
+			swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+		}
 	}
 
 	void addOrSetListener() {
@@ -165,25 +128,13 @@ public class MainActivity extends AppCompatActivity {
 		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
 		this.tloMain.addOnTabSelectedListener(new tloMain_OnTabSelectedListener());
 
-	}
+		Color_OnSeekBarChangeListener changeListener = new Color_OnSeekBarChangeListener();
+		skbAlpha.setOnSeekBarChangeListener(changeListener);
+		skbRed.setOnSeekBarChangeListener(changeListener);
+		skbGreen.setOnSeekBarChangeListener(changeListener);
+		skbBlue.setOnSeekBarChangeListener(changeListener);
 
-	private void refresh() {
-		if (mCountDownTimer != null)
-			mCountDownTimer.cancel();
-
-		mCountDownTimer = new CountDownTimer(100, 100) {
-			@Override
-			public void onTick(long millisUntilFinished) {
-
-			}
-
-			@Override
-			public void onFinish() {
-				swtOnOff.setChecked(ScreenFilterService.STATE == ScreenFilterService.STATE_ACTIVE);
-			}
-		};
-
-		mCountDownTimer.start();
+		swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
 	}
 
 	//endregion
@@ -205,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 			this.getDrawerArrowDrawable().setColor(MainActivity.this.getColor(R.color.white));
 		}
 	}
+
 	class tloMain_OnTabSelectedListener implements TabLayout.OnTabSelectedListener {
 
 		@Override
@@ -221,11 +173,64 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onTabReselected(TabLayout.Tab tab) { }
 	}
+
 	class ngvMain_NavigationItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
 
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			return false;
+		}
+	}
+
+	class Color_OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			mSharedMemory.setAlpha(skbAlpha.getProgress());
+			mSharedMemory.setRed(skbRed.getProgress());
+			mSharedMemory.setGreen(skbGreen.getProgress());
+			mSharedMemory.setBlue(skbBlue.getProgress());
+
+			if (swtOnOff.isChecked()) {
+				Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
+				MainActivity.this.startService(intent);
+			}
+
+
+		}
+
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) { }
+
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) { }
+	}
+
+	class swtOnOff_OnCheckedChangeListener implements CompoundButton.OnCheckedChangeListener {
+
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+			int id = isChecked ? R.string.on : R.string.off;
+			String text = getString(id);
+			buttonView.setText(text);
+			mSharedMemory.setTextSwitch(text);
+
+			Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
+
+			if (! isChecked) {
+				stopService(intent);
+				return;
+			}
+
+			if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(MainActivity.this)) {
+				Intent promptTheUserToGrant= new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+						Uri.parse("package:" + getPackageName()));
+				startActivityForResult(promptTheUserToGrant, 1234);
+				return;
+			}
+
+			startService(intent);
 		}
 	}
 

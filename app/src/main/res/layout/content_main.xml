@@ -89,11 +89,11 @@
 
 	<com.google.android.material.switchmaterial.SwitchMaterial
 		android:id="@+id/swt_on_off"
-		android:layout_width="79dp"
-		android:layout_height="48dp"
-		android:text="@string/off"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		app:layout_constraintBottom_toBottomOf="@+id/tlb_main"
 		app:layout_constraintEnd_toEndOf="@+id/tlb_main"
-		app:layout_constraintTop_toTopOf="@+id/tlb_main" />
+		app:layout_constraintTop_toTopOf="@+id/tlb_main"
+		android:textColor="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

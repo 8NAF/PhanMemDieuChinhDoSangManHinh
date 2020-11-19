@@ -9,16 +9,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 public class ScreenFilterService extends Service {
-
-	public static int STATE_ACTIVE = 0;
-	public static int STATE_INACTIBE = 1;
-
-	public static int STATE;
-
-	static {
-		STATE = STATE_INACTIBE;
-	}
 
 	private SharedMemory mSharedMemory;
 	private View mView;
@@ -40,8 +33,8 @@ public class ScreenFilterService extends Service {
 		mView.setBackgroundColor(mSharedMemory.getColor());
 
 		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
-				WindowManager.LayoutParams.FILL_PARENT,
-				WindowManager.LayoutParams.FILL_PARENT,
+				WindowManager.LayoutParams.MATCH_PARENT,
+				WindowManager.LayoutParams.MATCH_PARENT,
 				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
 				280,
 				PixelFormat.TRANSLUCENT
@@ -49,7 +42,12 @@ public class ScreenFilterService extends Service {
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;
 		windowManager.addView(mView, layoutParams);
-		STATE = STATE_ACTIVE;
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		mView.setBackgroundColor(mSharedMemory.getColor());
+		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
@@ -58,12 +56,5 @@ public class ScreenFilterService extends Service {
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;
 		windowManager.removeView(mView);
-		STATE = STATE_INACTIBE;
-	}
-
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		mView.setBackgroundColor(mSharedMemory.getColor());
-		return super.onStartCommand(intent, flags, startId);
 	}
 }
