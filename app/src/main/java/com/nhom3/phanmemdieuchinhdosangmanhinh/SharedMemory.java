@@ -3,7 +3,6 @@ package com.nhom3.phanmemdieuchinhdosangmanhinh;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.view.View;
 
 public class SharedMemory {
 	private SharedPreferences mSharedPreferences;

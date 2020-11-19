@@ -4,9 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -14,16 +12,16 @@ import android.widget.LinearLayout;
 public class ScreenFilterService extends Service {
 
 	public static int STATE_ACTIVE = 0;
-	public static int STATE_INACTIVE = 1;
+	public static int STATE_INACTIBE = 1;
 
 	public static int STATE;
 
 	static {
-		STATE = STATE_INACTIVE;
+		STATE = STATE_INACTIBE;
 	}
 
-	private SharedMemory sharedMemory;
-	private View view;
+	private SharedMemory mSharedMemory;
+	private View mView;
 
 	public ScreenFilterService() {
 	}
@@ -37,35 +35,21 @@ public class ScreenFilterService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		sharedMemory = new SharedMemory(this);
-		view = new LinearLayout(this);
-		view.setBackgroundColor(sharedMemory.getColor());
+		mSharedMemory = new SharedMemory(this);
+		mView = new LinearLayout(this);
+		mView.setBackgroundColor(mSharedMemory.getColor());
 
-		WindowManager.LayoutParams layoutParams;
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			layoutParams = new WindowManager.LayoutParams(
-					WindowManager.LayoutParams.FILL_PARENT,
-					WindowManager.LayoutParams.FILL_PARENT,
-					WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-					280,
-					PixelFormat.TRANSLUCENT);
-		}
-		else {
-			layoutParams = new WindowManager.LayoutParams(
-					WindowManager.LayoutParams.FILL_PARENT,
-					WindowManager.LayoutParams.FILL_PARENT,
-					WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-					280,
-					PixelFormat.TRANSLUCENT
-			);
-		}
-
+		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
+				WindowManager.LayoutParams.FILL_PARENT,
+				WindowManager.LayoutParams.FILL_PARENT,
+				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+				280,
+				PixelFormat.TRANSLUCENT
+		);
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;
-		windowManager.addView(view, layoutParams);
+		windowManager.addView(mView, layoutParams);
 		STATE = STATE_ACTIVE;
-		Log.d("TAGGGGG", "A");
 	}
 
 	@Override
@@ -73,13 +57,13 @@ public class ScreenFilterService extends Service {
 		super.onDestroy();
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;
-		windowManager.removeView(view);
-		STATE = STATE_INACTIVE;
+		windowManager.removeView(mView);
+		STATE = STATE_INACTIBE;
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		view.setBackgroundColor(sharedMemory.getColor());
+		mView.setBackgroundColor(mSharedMemory.getColor());
 		return super.onStartCommand(intent, flags, startId);
 	}
 }

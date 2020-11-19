@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
 		this.ngvMain.setNavigationItemSelectedListener(new ngvMain_NavigationItemSelectedListener());
 		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
 		this.tloMain.addOnTabSelectedListener(new tloMain_OnTabSelectedListener());
+
+
 	}
 
 	//endregion
