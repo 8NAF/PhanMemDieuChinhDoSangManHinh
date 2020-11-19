@@ -1,5 +1,6 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -36,10 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
 		this.mapped();
 		this.setSupportActionBar(this.tlbMain);
-		this.setListener();
-		this.addListener();
 		this.ngvMain.setItemIconTintList(null); //Đặt null để có thể thêm icon cho các menu item
-
+		this.addOrSetListener();
 	}
 
 	//endregion
@@ -54,11 +53,8 @@ public class MainActivity extends AppCompatActivity {
 		this.titWallpaper = this.findViewById(R.id.tit_wallpaper);
 	}
 
-	void setListener() {
+	void addOrSetListener() {
 		this.ngvMain.setNavigationItemSelectedListener(new ngvMain_NavigationItemSelectedListener());
-	}
-
-	void addListener() {
 		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
 		this.tloMain.addOnTabSelectedListener(new tloMain_OnTabSelectedListener());
 	}
@@ -87,20 +83,18 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onTabSelected(TabLayout.Tab tab) {
 
+			if (tab.getPosition() == 1) {
+				Intent intent = new Intent(MainActivity.this, WallpaperActivity.class);
+				MainActivity.this.startActivity(intent);
+			}
 		}
 
 		@Override
-		public void onTabUnselected(TabLayout.Tab tab) {
-
-		}
-
+		public void onTabUnselected(TabLayout.Tab tab) { }
 		@Override
-		public void onTabReselected(TabLayout.Tab tab) {
-
-		}
+		public void onTabReselected(TabLayout.Tab tab) { }
 	}
 	class ngvMain_NavigationItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
-
 
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
