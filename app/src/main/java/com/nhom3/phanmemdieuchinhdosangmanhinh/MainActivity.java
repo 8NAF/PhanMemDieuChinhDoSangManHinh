@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1234) {
+		if (requestCode == 1234) { //Trùng với số trong phương thức onCheckedChanged
 			if (resultCode == Activity.RESULT_OK) {
 				Intent i = new Intent(MainActivity.this, ScreenFilterService.class);
 				startService(i);
@@ -223,10 +223,12 @@ public class MainActivity extends AppCompatActivity {
 				return;
 			}
 
+			//Từ API 23 trở lên, một ứng dụng không thể nằm đè lên ứng dụng khác mà không cần quyền
+			//Vì vậy ta cần thông báo cho người dùng cấp quyền này
 			if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(MainActivity.this)) {
 				Intent promptTheUserToGrant= new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
 						Uri.parse("package:" + getPackageName()));
-				startActivityForResult(promptTheUserToGrant, 1234);
+				startActivityForResult(promptTheUserToGrant, 1234); //Số ngẫu nhiên
 				return;
 			}
 
