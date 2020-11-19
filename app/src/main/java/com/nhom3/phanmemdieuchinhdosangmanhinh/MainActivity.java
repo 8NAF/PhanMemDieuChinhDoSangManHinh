@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -41,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 	SeekBar skbBlue;
 
 	private SharedMemory mSharedMemory;
-	private CountDownTimer mCountDownTimer;
+
+	static final int OVERLAY_PERMISSION_CODE = 1234; //Chọn một con số ngẫu nhiên
 
 	//endregion
 	//region Override Methods
@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1234) { //Trùng với số trong phương thức onCheckedChanged
+
+		if (requestCode == OVERLAY_PERMISSION_CODE) {
+			//Người dùng cho phép ứng dụng overlay (đè) lên ứng dụng khác
 			if (resultCode == Activity.RESULT_OK) {
 				Intent i = new Intent(MainActivity.this, ScreenFilterService.class);
 				startService(i);
@@ -120,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
 			swtOnOff.setOnCheckedChangeListener(null);
 			swtOnOff.setChecked(true);
 			swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+
+			Intent intent = new Intent(MainActivity.this ,ScreenFilterService.class);
+			startService(intent);
 		}
 	}
 
@@ -226,9 +231,9 @@ public class MainActivity extends AppCompatActivity {
 			//Từ API 23 trở lên, một ứng dụng không thể nằm đè lên ứng dụng khác mà không cần quyền
 			//Vì vậy ta cần thông báo cho người dùng cấp quyền này
 			if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(MainActivity.this)) {
-				Intent promptTheUserToGrant= new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+				Intent promptTheUserToGrant = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
 						Uri.parse("package:" + getPackageName()));
-				startActivityForResult(promptTheUserToGrant, 1234); //Số ngẫu nhiên
+				startActivityForResult(promptTheUserToGrant, OVERLAY_PERMISSION_CODE);
 				return;
 			}
 
