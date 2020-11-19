@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
 		this.addOrSetListener();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		this.tloMain.getTabAt(0).select();
+	}
+
 	//endregion
 	//region Helper Methods
 
