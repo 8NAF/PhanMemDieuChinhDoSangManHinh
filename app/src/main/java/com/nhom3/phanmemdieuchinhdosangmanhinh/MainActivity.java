@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,18 +15,27 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 	//region Attributes
 
+	Toolbar tlbMain;
+
 	DrawerLayout dwlMain;
 	NavigationView ngvMain;
-	Toolbar tlbMain;
+
 	TabLayout tloMain;
 	TabItem titHome;
 	TabItem titWallpaper;
+
+	SwitchMaterial swtOnOff;
+	SeekBar skbAlpha;
+	SeekBar skbRed;
+	SeekBar skbGreen;
+	SeekBar skbBlue;
 
 	//endregion
 	//region Override Methods
@@ -51,12 +61,22 @@ public class MainActivity extends AppCompatActivity {
 	//region Helper Methods
 
 	protected void mapped() {
-		this.dwlMain = this.findViewById(R.id.dwl_main);
 		this.tlbMain = this.findViewById(R.id.tlb_main);
+
+		this.dwlMain = this.findViewById(R.id.dwl_main);
 		this.ngvMain = this.findViewById(R.id.ngv_main);
+
 		this.tloMain = this.findViewById(R.id.tlo_main);
 		this.titHome = this.findViewById(R.id.tit_home);
 		this.titWallpaper = this.findViewById(R.id.tit_wallpaper);
+
+		this.swtOnOff = this.findViewById(R.id.swt_on_off);
+		this.skbAlpha = this.findViewById(R.id.skbAlpha);
+		this.skbRed = this.findViewById(R.id.skbRed);
+		this.skbGreen = this.findViewById(R.id.skbGreen);
+		this.skbBlue = this.findViewById(R.id.skbBlue);
+
+
 	}
 
 	void addOrSetListener() {

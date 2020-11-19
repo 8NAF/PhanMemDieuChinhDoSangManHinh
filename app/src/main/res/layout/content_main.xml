@@ -88,7 +88,7 @@
 	</com.google.android.material.tabs.TabLayout>
 
 	<com.google.android.material.switchmaterial.SwitchMaterial
-		android:id="@+id/stw_on_off"
+		android:id="@+id/swt_on_off"
 		android:layout_width="79dp"
 		android:layout_height="48dp"
 		android:text="@string/off"
