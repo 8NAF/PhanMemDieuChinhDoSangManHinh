@@ -7,10 +7,12 @@
 	<string name="blue_light">What is blue light ?</string>
 	<string name="language">Language</string>
 	<string name="about_us">About us</string>
-	<string name="on">ON</string>
-	<string name="off">OFF</string>
+	<string name="on">On</string>
+	<string name="off">Off</string>
 	<string name="open">open</string>
 	<string name="close">close</string>
 	<string name="set_wallpaper">Set as wallpaper</string>
 	<string name="max_rgb" translatable="false">255</string>
+	<string name="stop_service">The application has been stopped</string>
+	<string name="start_service">The Application is running</string>
 </resources>

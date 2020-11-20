@@ -7,13 +7,20 @@ import android.graphics.Color;
 
 public class SharedMemory {
 
+	//region Attributes
+
 	private SharedPreferences sharedPreferences;
 	private Context context;
+
+	//endregion
+	//region Constructors
 
 	public SharedMemory(Context context) {
 		this.context = context;
 		sharedPreferences = context.getSharedPreferences("SCREEN_FILTER", Context.MODE_PRIVATE);
 	}
+
+	//endregion
 
 	private int getValue(String prop, int def) {
 		return sharedPreferences.getInt(prop, def);

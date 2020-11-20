@@ -13,4 +13,6 @@
 	<string name="open">mở</string>
 	<string name="close">đóng</string>
 	<string name="set_wallpaper">Đặt làm hình nền</string>
+	<string name="stop_service">Ứng dụng đã dừng lại</string>
+	<string name="start_service">Ứng dụng đang chạy</string>
 </resources>

@@ -30,7 +30,7 @@ public class StartActivity extends AppCompatActivity {
 	//region Helper Methods
 
 	protected void mapped() {
-		this.imbPower = (ImageButton) findViewById(R.id.imb_power);
+		this.imbPower = this.findViewById(R.id.imb_power);
 	}
 	protected void setListener() {
 		this.imbPower.setOnClickListener(new imbPower_OnClickListener());

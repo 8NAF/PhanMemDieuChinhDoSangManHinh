@@ -1,7 +1,10 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.provider.Settings;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -39,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
 	SeekBar skbGreen;
 	SeekBar skbBlue;
 
-	private SharedMemory mSharedMemory;
+	SharedMemory mSharedMemory;
 
-	static final int OVERLAY_PERMISSION_CODE = 1234; //Chọn một con số ngẫu nhiên
+	static final int OVERLAY_PERMISSION_CODE = 0;
 
 	//endregion
 	//region Override Methods
@@ -54,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
 		//Ánh xạ các view vào các attribute
 		this.mapped();
 
-		//Khởi tạo giá trị ban đầu cho các seek bar, switch và mSharedMemory
+		//Khởi tạo cho các seek bar và mSharedMemory
+		//Khởi tạo cho switch không có trong method này
+		//Mà nó nằm trong onResume để tránh start service 2 lần không cần thiết
 		this.initialize();
 
 		this.setSupportActionBar(this.tlbMain);
@@ -69,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 		this.tloMain.getTabAt(0).select();
-
 	}
 
 	@Override
@@ -77,18 +82,19 @@ public class MainActivity extends AppCompatActivity {
 
 		if (requestCode == OVERLAY_PERMISSION_CODE) {
 			//Người dùng cho phép ứng dụng overlay (đè) lên ứng dụng khác
-			if (resultCode == Activity.RESULT_OK) {
-				Intent i = new Intent(MainActivity.this, ScreenFilterService.class);
-				startService(i);
+			if (Settings.canDrawOverlays(this)) {
+				Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
+				startService(intent);
 			}
 		}
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	//endregion
 	//region Helper Methods
 
-	protected void mapped() {
+	void mapped() {
 		tlbMain = this.findViewById(R.id.tlb_main);
 
 		dwlMain = this.findViewById(R.id.dwl_main);
@@ -116,14 +122,11 @@ public class MainActivity extends AppCompatActivity {
 
 		swtOnOff.setText(mSharedMemory.getTextSwitch());
 		if (swtOnOff.getText().equals(getString(R.string.on))) {
-			//Method setChecked sẽ không có hiệu lực nếu switch có chứa sự kiện OnCheckedChangeListener
-			//Vì vậy cần set sự kiện OnCheckedChangeListener null trước khi call setChecked
-			//Sau đó set lại sự kiện cho switch
 			swtOnOff.setOnCheckedChangeListener(null);
 			swtOnOff.setChecked(true);
 			swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
 
-			Intent intent = new Intent(MainActivity.this ,ScreenFilterService.class);
+			Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
 			startService(intent);
 		}
 	}
@@ -158,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
 			this.setDrawerIndicatorEnabled(true);
 			this.syncState();
-			this.getDrawerArrowDrawable().setColor(MainActivity.this.getColor(R.color.white));
+			this.getDrawerArrowDrawable().setColor(MainActivity.this.getResources().getColor(R.color.white));
 		}
 	}
 
@@ -218,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
 			int id = isChecked ? R.string.on : R.string.off;
 			String text = getString(id);
+
 			buttonView.setText(text);
 			mSharedMemory.setTextSwitch(text);
 
