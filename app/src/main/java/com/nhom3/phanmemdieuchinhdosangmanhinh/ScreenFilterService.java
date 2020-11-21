@@ -13,15 +13,14 @@ import android.widget.Toast;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class ScreenFilterService extends Service {
+//TODO: Lần đầu tiên service không chạy
 
-	private static boolean ACTIVE = true;
+public class ScreenFilterService extends Service {
 
 	private SharedMemory mSharedMemory;
 	private View mView;
 
-	public ScreenFilterService() {
-	}
+	public ScreenFilterService() { }
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -31,9 +30,6 @@ public class ScreenFilterService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-//		if (ScreenFilterService.ACTIVE)
-//			return;
 
 		mSharedMemory = new SharedMemory(this);
 		mView = new LinearLayout(this);
@@ -65,16 +61,13 @@ public class ScreenFilterService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Toast.makeText(this, getString(R.string.start_service), Toast.LENGTH_SHORT).show();
-		ACTIVE = true;
 		mView.setBackgroundColor(mSharedMemory.getColor());
-		super.onStartCommand(intent, flags, startId);
-		return Service.START_STICKY;
+		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	public void onDestroy() {
 		Toast.makeText(this, getString(R.string.stop_service), Toast.LENGTH_SHORT).show();
-		ACTIVE = false;
 		super.onDestroy();
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;

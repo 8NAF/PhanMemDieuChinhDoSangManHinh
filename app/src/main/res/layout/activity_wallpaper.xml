@@ -4,9 +4,16 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:columnCount="2"
+	android:layout_margin="10px"
 	tools:context=".WallpaperActivity">
 
-
+	<GridView
+		android:id="@+id/grv_wallpaper"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:horizontalSpacing="10px"
+		android:verticalSpacing="10px"
+		android:stretchMode="columnWidth"
+		android:numColumns="2"/>
 
 </LinearLayout>

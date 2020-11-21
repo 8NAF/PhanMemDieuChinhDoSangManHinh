@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 		this.tloMain.getTabAt(0).select();
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
