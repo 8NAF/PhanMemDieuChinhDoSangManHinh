@@ -1,11 +1,6 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +10,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -77,10 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-		ImageButton imageButton1 = findViewById(R.id.imb_incandescent_lamp);
-		ImageButton imageButton2 = findViewById(R.id.imb_moon);
-		ImageButton imageButton3 = findViewById(R.id.imb_sunrise);
-		ImageButton imageButton4 = findViewById(R.id.imb_sunlight);
+		ImageButton imageButton1 = findViewById(R.id.imb_moon);
+		ImageButton imageButton2 = findViewById(R.id.imb_candle);
+		ImageButton imageButton3 = findViewById(R.id.imb_incandescent_lamp);
+		ImageButton imageButton4 = findViewById(R.id.imb_fluorescent_lamp);
+		ImageButton imageButton5 = findViewById(R.id.imb_sunrise);
+		ImageButton imageButton6 = findViewById(R.id.imb_eclipse);
+		ImageButton imageButton7 = findViewById(R.id.imb_forest);
+		ImageButton imageButton8 = findViewById(R.id.imb_sunlight);
 
 		preSelectedImageButton = imageButton1;
 
@@ -100,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
 		imageButton2.setOnClickListener(onClickListener);
 		imageButton3.setOnClickListener(onClickListener);
 		imageButton4.setOnClickListener(onClickListener);
+		imageButton5.setOnClickListener(onClickListener);
+		imageButton6.setOnClickListener(onClickListener);
+		imageButton7.setOnClickListener(onClickListener);
+		imageButton8.setOnClickListener(onClickListener);
 	}
 
 	@Override
