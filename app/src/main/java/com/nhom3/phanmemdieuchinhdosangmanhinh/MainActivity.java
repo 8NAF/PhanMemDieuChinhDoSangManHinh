@@ -11,7 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
 	static final int OVERLAY_PERMISSION_CODE = 0;
 
+	ImageButton preSelectedImageButton;
+
 	//endregion
 	//region Override Methods
 
@@ -71,6 +75,31 @@ public class MainActivity extends AppCompatActivity {
 
 		this.addOrSetListener();
 
+
+
+		ImageButton imageButton1 = findViewById(R.id.imb_incandescent_lamp);
+		ImageButton imageButton2 = findViewById(R.id.imb_moon);
+		ImageButton imageButton3 = findViewById(R.id.imb_sunrise);
+		ImageButton imageButton4 = findViewById(R.id.imb_sunlight);
+
+		preSelectedImageButton = imageButton1;
+
+		View.OnClickListener onClickListener = new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ImageButton imageButton = (ImageButton) v;
+				imageButton.setBackgroundResource(R.color.blue_500);
+				if (imageButton != preSelectedImageButton) {
+					preSelectedImageButton.setBackgroundResource(R.color.blue_sky);
+					preSelectedImageButton = imageButton;
+				}
+			}
+		};
+
+		imageButton1.setOnClickListener(onClickListener);
+		imageButton2.setOnClickListener(onClickListener);
+		imageButton3.setOnClickListener(onClickListener);
+		imageButton4.setOnClickListener(onClickListener);
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class ScreenFilterService extends Service {
 		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 		layoutParams.width = MATCH_PARENT;
 		layoutParams.height = getLengthOfLagerDimension() + 200;
-		layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+		layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
 		layoutParams.flags =
 				WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
@@ -60,14 +60,12 @@ public class ScreenFilterService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, getString(R.string.start_service), Toast.LENGTH_SHORT).show();
 		mView.setBackgroundColor(mSharedMemory.getColor());
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	public void onDestroy() {
-		Toast.makeText(this, getString(R.string.stop_service), Toast.LENGTH_SHORT).show();
 		super.onDestroy();
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;

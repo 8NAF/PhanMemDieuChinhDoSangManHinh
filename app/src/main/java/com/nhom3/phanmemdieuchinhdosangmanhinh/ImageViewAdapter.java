@@ -17,7 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.IdRes;
 import java.util.List;
 
-public class ImageAdapter extends BaseAdapter {
+public class ImageViewAdapter extends BaseAdapter {
 
 	//region Attributes
 
@@ -27,7 +27,7 @@ public class ImageAdapter extends BaseAdapter {
 	//endregion
 	//region Constructors
 
-	public ImageAdapter(Context context, List<Integer> imageIdList) {
+	public ImageViewAdapter(Context context, List<Integer> imageIdList) {
 		this.context = context;
 		this.imageIdList = imageIdList;
 	}
@@ -62,7 +62,6 @@ public class ImageAdapter extends BaseAdapter {
 		imageView.setImageResource(this.imageIdList.get(position));
 		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		imageView.setLayoutParams(new GridView.LayoutParams((screenWidth - 30)/2, screenHeight/2));
-
 
 		return imageView;
 	}

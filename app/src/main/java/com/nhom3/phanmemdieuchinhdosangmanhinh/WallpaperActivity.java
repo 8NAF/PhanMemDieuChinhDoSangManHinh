@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ public class WallpaperActivity extends AppCompatActivity {
 		this.grvWallpaper = this.findViewById(R.id.grv_wallpaper);
 	}
 
-	private ImageAdapter getImageAdaptor() {
+	private ImageViewAdapter getImageAdaptor() {
 
 		ArrayList<Integer> imageIdList = new ArrayList<>();
 		imageIdList.add(R.drawable.wallpaper1);
@@ -46,7 +45,7 @@ public class WallpaperActivity extends AppCompatActivity {
 		imageIdList.add(R.drawable.wallpaper9);
 		imageIdList.add(R.drawable.wallpaper10);
 
-		return new ImageAdapter(this, imageIdList);
+		return new ImageViewAdapter(this, imageIdList);
 	}
 
 	private void setListener() {

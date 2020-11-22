@@ -5,9 +5,9 @@
 	Vì vậy ta không thể áp dụng ConstraintLayout cho nó nữa
 	Cho nên ta giải pháp là tạo một content_main.xml để có thể dùng ConstraintLayout
 -->
-<androidx.constraintlayout.widget.ConstraintLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -24,10 +24,10 @@
 
 
 	<LinearLayout
-		android:layout_width="0dp"
-		android:layout_height="0dp"
+		android:id="@+id/lnl_color"
+		android:layout_width="416dp"
+		android:layout_height="321dp"
 		android:orientation="vertical"
-		app:layout_constraintBottom_toTopOf="@+id/tlo_main"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/tlb_main">
@@ -59,6 +59,7 @@
 			android:layout_height="wrap_content"
 			android:layout_margin="25dp"
 			android:max="255" />
+
 	</LinearLayout>
 
 	<com.google.android.material.tabs.TabLayout
@@ -91,9 +92,60 @@
 		android:id="@+id/swt_on_off"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:textColor="@color/white"
 		app:layout_constraintBottom_toBottomOf="@+id/tlb_main"
 		app:layout_constraintEnd_toEndOf="@+id/tlb_main"
-		app:layout_constraintTop_toTopOf="@+id/tlb_main"
-		android:textColor="@color/white" />
+		app:layout_constraintTop_toTopOf="@+id/tlb_main" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:orientation="horizontal"
+		app:layout_constraintBottom_toTopOf="@+id/tlo_main"
+		app:layout_constraintTop_toBottomOf="@+id/lnl_color"
+		tools:layout_editor_absoluteX="3dp">
+
+
+		<ImageButton
+			android:id="@+id/imb_incandescent_lamp"
+			android:layout_width="0dp"
+			android:layout_height="50dp"
+			android:layout_marginRight="20dp"
+			android:layout_weight="1"
+			android:background="@color/blue_500"
+			android:scaleType="fitXY"
+			android:src="@drawable/ic_incandescent_lamp" />
+
+		<ImageButton
+			android:id="@+id/imb_moon"
+			android:layout_width="0dp"
+			android:layout_height="50dp"
+			android:layout_marginRight="20dp"
+			android:layout_weight="1"
+			android:background="@color/blue_sky"
+			android:scaleType="fitXY"
+			android:src="@drawable/ic_moon" />
+
+		<ImageButton
+			android:id="@+id/imb_sunrise"
+			android:layout_width="0dp"
+			android:layout_height="50dp"
+			android:layout_marginRight="20dp"
+			android:layout_weight="1"
+			android:background="@color/blue_sky"
+			android:scaleType="fitXY"
+			android:src="@drawable/ic_sunrise" />
+
+		<ImageButton
+			android:id="@+id/imb_sunlight"
+			android:layout_width="0dp"
+			android:layout_height="80dp"
+			android:layout_weight="1"
+			android:background="@color/blue_sky"
+			android:scaleType="fitXY"
+			app:srcCompat="@drawable/ic_candle" />
+
+	</LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
