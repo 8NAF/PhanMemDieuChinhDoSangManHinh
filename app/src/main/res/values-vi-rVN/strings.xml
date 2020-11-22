@@ -15,4 +15,6 @@
 	<string name="set_wallpaper">Đặt làm hình nền</string>
 	<string name="stop_service">Ứng dụng đã dừng lại</string>
 	<string name="start_service">Ứng dụng đang chạy</string>
+	<string name="set_success">Hình nền đã được thay đổi</string>
+	<string name="set_failed">Đặt hình nền thất bại</string>
 </resources>

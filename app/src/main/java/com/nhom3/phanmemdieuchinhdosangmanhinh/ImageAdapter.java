@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public class ImageAdapter extends BaseAdapter {
 		imageView.setImageResource(this.imageIdList.get(position));
 		imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		imageView.setLayoutParams(new GridView.LayoutParams((screenWidth - 30)/2, screenHeight/2));
+
 
 		return imageView;
 	}
