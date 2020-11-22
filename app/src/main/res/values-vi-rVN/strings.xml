@@ -25,4 +25,6 @@
 	<string name="eclipse_mode">Nhật thực</string>
 	<string name="forest_mode">Ánh sáng trong rừng</string>
 	<string name="sunlight_mode">Ánh sáng mặt trời</string>
+	<string name="color_temperature">Nhiệt độ màu</string>
+	<string name="intensity">Cường độ</string>
 </resources>

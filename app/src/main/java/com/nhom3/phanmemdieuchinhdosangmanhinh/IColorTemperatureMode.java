@@ -4,4 +4,5 @@ public interface IColorTemperatureMode {
 	int getRed();
 	int getGreen();
 	int getBlue();
+	int getColorTemperature();
 }

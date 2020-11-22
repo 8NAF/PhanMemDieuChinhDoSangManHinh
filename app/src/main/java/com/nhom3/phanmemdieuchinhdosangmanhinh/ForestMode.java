@@ -16,4 +16,9 @@ public class ForestMode implements IColorTemperatureMode {
 	public int getBlue() {
 		return 126;
 	}
+
+	@Override
+	public int getColorTemperature() {
+		return 3300;
+	}
 }

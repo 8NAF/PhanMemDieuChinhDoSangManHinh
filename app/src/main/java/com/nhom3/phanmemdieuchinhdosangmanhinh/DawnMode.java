@@ -1,6 +1,5 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
-//2000K
 public class DawnMode implements IColorTemperatureMode {
 	@Override
 	public int getRed() {
@@ -15,5 +14,10 @@ public class DawnMode implements IColorTemperatureMode {
 	@Override
 	public int getBlue() {
 		return 18;
+	}
+
+	@Override
+	public int getColorTemperature() {
+		return 2000;
 	}
 }

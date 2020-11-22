@@ -25,4 +25,6 @@
 	<string name="eclipse_mode">Eclipse</string>
 	<string name="forest_mode">Forest</string>
 	<string name="sunlight_mode">Sunlight</string>
+	<string name="color_temperature">Color Temperature</string>
+	<string name="intensity">Intensity</string>
 </resources>

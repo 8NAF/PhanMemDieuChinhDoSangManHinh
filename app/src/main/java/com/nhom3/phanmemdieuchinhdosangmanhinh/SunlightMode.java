@@ -16,4 +16,9 @@ public class SunlightMode implements IColorTemperatureMode{
 	public int getBlue() {
 		return 186;
 	}
+
+	@Override
+	public int getColorTemperature() {
+		return 4500;
+	}
 }

@@ -3,6 +3,7 @@ package com.nhom3.phanmemdieuchinhdosangmanhinh;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 
@@ -31,28 +33,24 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 	//region Attributes
 
-	Toolbar tlbMain;
+	private Toolbar tlbMain;
 
-	DrawerLayout dwlMain;
-	NavigationView ngvMain;
+	private DrawerLayout dwlMain;
+	private NavigationView ngvMain;
 
-	TabLayout tloMain;
-	TabItem titHome;
-	TabItem titWallpaper;
+	private TabLayout tloMain;
+	private TabItem titHome;
+	private TabItem titWallpaper;
 
-	SwitchMaterial swtOnOff;
-	SeekBar skbAlpha;
-	SeekBar skbRed;
-	SeekBar skbGreen;
-	SeekBar skbBlue;
+	private SwitchMaterial swtOnOff;
+	private SeekBar skbIntensity;
 
-	SharedMemory mSharedMemory;
+	private SharedMemory mSharedMemory;
+	private static final int OVERLAY_PERMISSION_CODE = 0;
 
-	static final int OVERLAY_PERMISSION_CODE = 0;
-
-	ImageButton preSelectedImageButton;
-	HashMap<Integer, IColorTemperatureMode> mapColor;
-	HashMap<Integer, String> mapTitle;
+	private ImageButton preSelectedImageButton;
+	private HashMap<Integer, IColorTemperatureMode> mapColor;
+	private HashMap<Integer, String> mapTitle;
 
 	//endregion
 	//region Override Methods
@@ -168,11 +166,16 @@ public class MainActivity extends AppCompatActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		if (requestCode == OVERLAY_PERMISSION_CODE) {
-			//Người dùng cho phép ứng dụng overlay (đè) lên ứng dụng khác
-			if (Settings.canDrawOverlays(this)) {
-				Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
-				startService(intent);
+			if (Settings.canDrawOverlays(this))
+				startScreenFilterService();
+			else {
+				swtOnOff.setOnCheckedChangeListener(null);
+				swtOnOff.setChecked(false);
+				swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+
+				mSharedMemory.setTextSwitch(getString(R.string.off));
 			}
+
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);
@@ -181,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 	//endregion
 	//region Helper Methods
 
-	void mapped() {
+	private void mapped() {
 		tlbMain = this.findViewById(R.id.tlb_main);
 
 		dwlMain = this.findViewById(R.id.dwl_main);
@@ -192,44 +195,61 @@ public class MainActivity extends AppCompatActivity {
 		titWallpaper = this.findViewById(R.id.tit_wallpaper);
 
 		swtOnOff = this.findViewById(R.id.swt_on_off);
-		skbAlpha = this.findViewById(R.id.skbAlpha);
-		skbRed = this.findViewById(R.id.skbRed);
-		skbGreen = this.findViewById(R.id.skbGreen);
-		skbBlue = this.findViewById(R.id.skbBlue);
+		skbIntensity = this.findViewById(R.id.skb_intensity);
 	}
 
-	void initialize() {
+	private void initialize() {
 
 		mSharedMemory = new SharedMemory(this);
 
-		skbAlpha.setProgress(mSharedMemory.getAlpha());
-		skbRed.setProgress(mSharedMemory.getRed());
-		skbGreen.setProgress(mSharedMemory.getGreen());
-		skbBlue.setProgress(mSharedMemory.getBlue());
+		skbIntensity.setProgress(mSharedMemory.getAlpha());
+
+		initializeSwitchOnOff();
+
+
+	}
+
+	private void initializeSwitchOnOff() {
+
+		if (canNotDrawOverlays()) {
+
+			String offText = getString(R.string.off);
+
+			swtOnOff.setChecked(false);
+			swtOnOff.setText(offText);
+			mSharedMemory.setTextSwitch(offText);
+			return;
+		}
 
 		swtOnOff.setText(mSharedMemory.getTextSwitch());
 		if (swtOnOff.getText().equals(getString(R.string.on))) {
-			swtOnOff.setOnCheckedChangeListener(null);
 			swtOnOff.setChecked(true);
-			swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
-
-			Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
-			startService(intent);
+			startScreenFilterService();
 		}
 	}
 
-	void addOrSetListener() {
+	private void addOrSetListener() {
 		this.ngvMain.setNavigationItemSelectedListener(new ngvMain_NavigationItemSelectedListener());
 		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
 		this.tloMain.addOnTabSelectedListener(new tloMain_OnTabSelectedListener());
 
-		Color_OnSeekBarChangeListener changeListener = new Color_OnSeekBarChangeListener();
-		skbAlpha.setOnSeekBarChangeListener(changeListener);
-		skbRed.setOnSeekBarChangeListener(changeListener);
-		skbGreen.setOnSeekBarChangeListener(changeListener);
-		skbBlue.setOnSeekBarChangeListener(changeListener);
-
+		skbIntensity.setOnSeekBarChangeListener(new skbIntensity_OnSeekBarChangeListener());
 		swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+	}
+
+	private void startScreenFilterService() {
+		Intent intent = new Intent(this, ScreenFilterService.class);
+		startService(intent);
+	}
+
+	private void stopScreenFilterService() {
+		Intent intent = new Intent(this, ScreenFilterService.class);
+		stopService(intent);
+	}
+
+	private boolean canNotDrawOverlays() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+				!Settings.canDrawOverlays(MainActivity.this);
 	}
 
 	//endregion
@@ -277,21 +297,14 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	class Color_OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+	class skbIntensity_OnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			mSharedMemory.setAlpha(skbAlpha.getProgress());
-			mSharedMemory.setRed(skbRed.getProgress());
-			mSharedMemory.setGreen(skbGreen.getProgress());
-			mSharedMemory.setBlue(skbBlue.getProgress());
+			mSharedMemory.setAlpha(skbIntensity.getProgress());
 
-			if (swtOnOff.isChecked()) {
-				Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
-				MainActivity.this.startService(intent);
-			}
-
-
+			if (swtOnOff.isChecked())
+				startScreenFilterService();
 		}
 
 		@Override
@@ -312,23 +325,27 @@ public class MainActivity extends AppCompatActivity {
 			buttonView.setText(text);
 			mSharedMemory.setTextSwitch(text);
 
-			Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
-
 			if (! isChecked) {
-				stopService(intent);
+				stopScreenFilterService();
 				return;
 			}
 
-			//Từ API 23 trở lên, một ứng dụng không thể nằm đè lên ứng dụng khác mà không cần quyền
-			//Vì vậy ta cần thông báo cho người dùng cấp quyền này
-			if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(MainActivity.this)) {
-				Intent promptTheUserToGrant = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-						Uri.parse("package:" + getPackageName()));
-				startActivityForResult(promptTheUserToGrant, OVERLAY_PERMISSION_CODE);
+			if (canNotDrawOverlays()) {
+				requestOverlayPermission();
 				return;
 			}
 
-			startService(intent);
+			startScreenFilterService();
+		}
+
+		@RequiresApi(api = Build.VERSION_CODES.M)
+		private void requestOverlayPermission() {
+
+			Intent promptTheUserToGrant = new Intent (
+				Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+				Uri.parse("package:" + getPackageName())
+			);
+			startActivityForResult(promptTheUserToGrant, OVERLAY_PERMISSION_CODE);
 		}
 	}
 

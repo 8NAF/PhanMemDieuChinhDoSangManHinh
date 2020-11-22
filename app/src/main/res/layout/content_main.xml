@@ -7,6 +7,7 @@
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -21,45 +22,6 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:titleTextColor="@color/white" />
 
-
-	<LinearLayout
-		android:id="@+id/lnl_color"
-		android:layout_width="416dp"
-		android:layout_height="321dp"
-		android:orientation="vertical"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/tlb_main">
-
-		<SeekBar
-			android:id="@+id/skbAlpha"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="25dp"
-			android:max="200" />
-
-		<SeekBar
-			android:id="@+id/skbRed"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="25dp"
-			android:max="255" />
-
-		<SeekBar
-			android:id="@+id/skbGreen"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="25dp"
-			android:max="255" />
-
-		<SeekBar
-			android:id="@+id/skbBlue"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="25dp"
-			android:max="255" />
-
-	</LinearLayout>
 
 	<com.google.android.material.tabs.TabLayout
 		android:id="@+id/tlo_main"
@@ -97,16 +59,56 @@
 		app:layout_constraintTop_toTopOf="@+id/tlb_main" />
 
 	<LinearLayout
+		android:id="@+id/lnl1"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="20dp"
+		android:layout_marginEnd="20dp"
+		android:orientation="horizontal"
+		android:weightSum="3"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/tlb_main">
+
+		<TextView
+			android:id="@+id/txv_color_temperature_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center_vertical"
+			android:text="@string/color_temperature"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+
+		<TextView
+			android:id="@+id/txv_color_temperature_value"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="2"
+			android:gravity="center_vertical"
+			android:text="Test"
+			android:textSize="20sp"
+			android:textStyle="bold" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/lnl2"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="15dp"
+		android:layout_marginEnd="20dp"
 		android:orientation="vertical"
-		app:layout_constraintBottom_toTopOf="@+id/tlo_main"
-		app:layout_constraintTop_toBottomOf="@+id/lnl_color">
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/lnl1">
 
 		<LinearLayout
-			android:layout_weight="1"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			android:layout_height="0dp"
+			android:layout_marginBottom="20dp"
+			android:layout_weight="1"
 			android:orientation="horizontal">
 
 			<ImageButton
@@ -155,10 +157,11 @@
 
 
 		</LinearLayout>
+
 		<LinearLayout
-			android:layout_weight="1"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
 			android:orientation="horizontal">
 
 			<ImageButton
@@ -207,8 +210,62 @@
 
 
 		</LinearLayout>
-
 	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/lnl3"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="20dp"
+		android:layout_marginEnd="20dp"
+		android:orientation="horizontal"
+		android:weightSum="3"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/lnl2">
+
+	<TextView
+		android:id="@+id/txv_intensity_title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:gravity="center_vertical"
+		android:text="@string/intensity"
+		android:textSize="20sp"
+		android:textStyle="bold" />
+
+	<TextView
+		android:id="@+id/txv_intensity_title_value"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="2"
+		android:gravity="center_vertical"
+		android:text="Test"
+		android:textSize="20sp"
+		android:textStyle="bold" />
+	</LinearLayout>
+
+	<SeekBar
+		android:id="@+id/skb_intensity"
+		android:layout_width="0dp"
+		android:layout_height="35dp"
+		android:layout_marginStart="6dp"
+		android:layout_marginTop="5dp"
+		android:layout_marginEnd="20dp"
+		android:max="200"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/imageView"
+		app:layout_constraintTop_toBottomOf="@+id/lnl3" />
+
+	<ImageView
+		android:id="@+id/imageView"
+		android:layout_width="20dp"
+		android:layout_height="35dp"
+		android:layout_marginStart="20dp"
+		android:layout_marginTop="5dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/lnl3"
+		app:srcCompat="@drawable/ic_intensity" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

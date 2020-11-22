@@ -1,6 +1,5 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
-//2700K
 public class IncandescentMode implements IColorTemperatureMode {
 	@Override
 	public int getRed() {
@@ -15,5 +14,10 @@ public class IncandescentMode implements IColorTemperatureMode {
 	@Override
 	public int getBlue() {
 		return 87;
+	}
+
+	@Override
+	public int getColorTemperature() {
+		return 2700;
 	}
 }

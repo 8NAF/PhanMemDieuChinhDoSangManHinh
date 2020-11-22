@@ -16,4 +16,9 @@ public class EclipseMode implements IColorTemperatureMode {
 	public int getBlue() {
 		return 206;
 	}
+
+	@Override
+	public int getColorTemperature() {
+		return 5000;
+	}
 }
