@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,6 +36,7 @@ public class ScreenFilterService extends Service {
 		mView = new LinearLayout(this);
 		mView.setBackgroundColor(mSharedMemory.getColor());
 
+
 		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 		layoutParams.width = MATCH_PARENT;
 		layoutParams.height = getLengthOfLagerDimension() + 200;
@@ -44,6 +46,12 @@ public class ScreenFilterService extends Service {
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
 				WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
 		layoutParams.format = PixelFormat.TRANSLUCENT;
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+			layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+		}else {
+			layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+		}
 
 		WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		assert windowManager != null;

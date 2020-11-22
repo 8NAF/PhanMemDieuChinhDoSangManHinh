@@ -1,6 +1,8 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -22,6 +25,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 	//region Attributes
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 	static final int OVERLAY_PERMISSION_CODE = 0;
 
 	ImageButton preSelectedImageButton;
+	HashMap<Integer, IColorTemperatureMode> mapColor;
+	HashMap<Integer, String> mapTitle;
 
 	//endregion
 	//region Override Methods
@@ -70,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 		this.addOrSetListener();
 
 
-
 		ImageButton imageButton1 = findViewById(R.id.imb_moon);
 		ImageButton imageButton2 = findViewById(R.id.imb_candle);
 		ImageButton imageButton3 = findViewById(R.id.imb_incandescent_lamp);
@@ -80,7 +86,35 @@ public class MainActivity extends AppCompatActivity {
 		ImageButton imageButton7 = findViewById(R.id.imb_forest);
 		ImageButton imageButton8 = findViewById(R.id.imb_sunlight);
 
-		preSelectedImageButton = imageButton1;
+		mapColor = new HashMap<>();
+
+		mapColor.put(R.id.imb_moon, new NightMode());
+		mapColor.put(R.id.imb_candle, new CandleMode());
+		mapColor.put(R.id.imb_incandescent_lamp, new IncandescentMode());
+		mapColor.put(R.id.imb_fluorescent_lamp, new FluorescentMode());
+		mapColor.put(R.id.imb_sunrise, new DawnMode());
+		mapColor.put(R.id.imb_eclipse, new EclipseMode());
+		mapColor.put(R.id.imb_forest, new ForestMode());
+		mapColor.put(R.id.imb_sunlight, new SunlightMode());
+
+		mapTitle = new HashMap<>();
+
+		mapTitle.put(R.id.imb_moon, getString(R.string.night_mode));
+		mapTitle.put(R.id.imb_candle, getString(R.string.candle_mode));
+		mapTitle.put(R.id.imb_incandescent_lamp, getString(R.string.incandescent_mode));
+		mapTitle.put(R.id.imb_fluorescent_lamp, getString(R.string.fluorescent_mode));
+		mapTitle.put(R.id.imb_sunrise, getString(R.string.dawn_mode));
+		mapTitle.put(R.id.imb_eclipse, getString(R.string.eclipse_mode));
+		mapTitle.put(R.id.imb_forest, getString(R.string.forest_mode));
+		mapTitle.put(R.id.imb_sunlight, getString(R.string.sunlight_mode));
+
+		SharedPreferences sharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
+
+		preSelectedImageButton = findViewById(sharedPreferences.getInt("id", R.id.imv_moon));
+		if (preSelectedImageButton == null)
+			preSelectedImageButton = imageButton1;
+		preSelectedImageButton.setBackgroundResource(R.color.blue_500);
+
 
 		View.OnClickListener onClickListener = new View.OnClickListener() {
 			@Override
@@ -91,6 +125,21 @@ public class MainActivity extends AppCompatActivity {
 					preSelectedImageButton.setBackgroundResource(R.color.blue_sky);
 					preSelectedImageButton = imageButton;
 				}
+
+				SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("id", Context.MODE_PRIVATE);
+				sharedPreferences.edit().putInt("id", imageButton.getId()).apply();
+
+				IColorTemperatureMode mode = mapColor.get(imageButton.getId());
+				mSharedMemory.setRed(mode.getRed());
+				mSharedMemory.setGreen(mode.getGreen());
+				mSharedMemory.setBlue(mode.getBlue());
+
+				if (swtOnOff.isChecked()) {
+					Toast.makeText(MainActivity.this, mapTitle.get(imageButton.getId()), Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
+					MainActivity.this.startService(intent);
+				}
+
 			}
 		};
 
@@ -102,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
 		imageButton6.setOnClickListener(onClickListener);
 		imageButton7.setOnClickListener(onClickListener);
 		imageButton8.setOnClickListener(onClickListener);
+
+
+
+
 	}
 
 	@Override

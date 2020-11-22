@@ -17,4 +17,12 @@
 	<string name="start_service">The Application is running</string>
 	<string name="set_success">The wallpaper is set successfully</string>
 	<string name="set_failed">Unable to set the wallpaper</string>
+	<string name="night_mode">Night shift</string>
+	<string name="candle_mode">Candle</string>
+	<string name="incandescent_mode">Incandescent lamp</string>
+	<string name="fluorescent_mode">Fluorescent lamp</string>
+	<string name="dawn_mode">Dawn</string>
+	<string name="eclipse_mode">Eclipse</string>
+	<string name="forest_mode">Forest</string>
+	<string name="sunlight_mode">Sunlight</string>
 </resources>

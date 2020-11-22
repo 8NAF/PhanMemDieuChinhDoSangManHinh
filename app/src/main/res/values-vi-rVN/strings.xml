@@ -17,4 +17,12 @@
 	<string name="start_service">Ứng dụng đang chạy</string>
 	<string name="set_success">Hình nền đã được thay đổi</string>
 	<string name="set_failed">Đặt hình nền thất bại</string>
+	<string name="night_mode">Ban đêm</string>
+	<string name="candle_mode">Ánh sáng đèn nến</string>
+	<string name="incandescent_mode">Đèn sợi đốt</string>
+	<string name="fluorescent_mode">Đèn huỳnh quang</string>
+	<string name="dawn_mode">Bình minh</string>
+	<string name="eclipse_mode">Nhật thực</string>
+	<string name="forest_mode">Ánh sáng trong rừng</string>
+	<string name="sunlight_mode">Ánh sáng mặt trời</string>
 </resources>

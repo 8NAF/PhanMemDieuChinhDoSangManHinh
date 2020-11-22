@@ -116,7 +116,7 @@
 				android:layout_marginLeft="20dp"
 				android:layout_marginRight="20dp"
 				android:layout_weight="1"
-				android:background="@color/blue_500"
+				android:background="@color/blue_sky"
 				android:scaleType="fitXY"
 				android:src="@drawable/ic_moon" />
 
