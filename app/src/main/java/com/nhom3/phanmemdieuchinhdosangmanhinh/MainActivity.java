@@ -1,9 +1,8 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 
@@ -30,6 +28,7 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,16 +61,40 @@ public class MainActivity extends AppCompatActivity {
 	private TextView txvIntensity;
 
 	private SharedMemory mSharedMemory;
-	private HashMap<Integer, IColorTemperatureMode> mapMode;
 
 	private static final int OVERLAY_PERMISSION_CODE = 0;
+	private static final int SELECT_LANGUAGE = 1;
+
+	private static final HashMap<Integer, IColorTemperatureMode> mapMode;
+	private static final HashMap<Integer, String> mapLanguage;
+
+	static {
+
+			mapMode = new HashMap<>();
+
+			mapMode.put(R.id.imb_moon, new NightMode());
+			mapMode.put(R.id.imb_candle, new CandleMode());
+			mapMode.put(R.id.imb_incandescent_lamp, new IncandescentMode());
+			mapMode.put(R.id.imb_fluorescent_lamp, new FluorescentMode());
+			mapMode.put(R.id.imb_sunrise, new DawnMode());
+			mapMode.put(R.id.imb_eclipse, new EclipseMode());
+			mapMode.put(R.id.imb_forest, new ForestMode());
+			mapMode.put(R.id.imb_sunlight, new SunlightMode());
+
+			mapLanguage = new HashMap<>();
+
+			mapLanguage.put(R.id.rdb_en, "en");
+			mapLanguage.put(R.id.rdb_vn, "vi");
+	}
 
 	//endregion
 	//region Override Methods
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setLocale();
 		this.setContentView(R.layout.activity_main);
 
 		//Ánh xạ các view vào các attribute
@@ -97,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 			swtOnOff.setChecked(false);
 			swtOnOff.setText(offText);
-			mSharedMemory.setTextSwitch(offText);
+			mSharedMemory.setStateSwitch(false);
 		}
 	}
 
@@ -105,17 +128,24 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == OVERLAY_PERMISSION_CODE) {
-			if (Settings.canDrawOverlays(this))
-				startScreenFilterService();
-			else {
-				swtOnOff.setOnCheckedChangeListener(null);
-				swtOnOff.setChecked(false);
-				swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+		switch (requestCode) {
+			case OVERLAY_PERMISSION_CODE:
+				if (Settings.canDrawOverlays(this))
+					startScreenFilterService();
+				else {
+					swtOnOff.setOnCheckedChangeListener(null);
+					swtOnOff.setChecked(false);
+					swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
 
-				mSharedMemory.setTextSwitch(getString(R.string.off));
-			}
+					mSharedMemory.setStateSwitch(false);
+				}
+				break;
 
+			case SELECT_LANGUAGE:
+				Intent intent = new Intent(MainActivity.this, MainActivity.class);
+				finish();
+				startActivity(intent);
+				break;
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);
@@ -148,17 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
 		txvColorTemperature = findViewById(R.id.txv_color_temperature);
 		txvIntensity = findViewById(R.id.txv_intensity);
-
-		mapMode = new HashMap<>();
-
-		mapMode.put(R.id.imb_moon, new NightMode());
-		mapMode.put(R.id.imb_candle, new CandleMode());
-		mapMode.put(R.id.imb_incandescent_lamp, new IncandescentMode());
-		mapMode.put(R.id.imb_fluorescent_lamp, new FluorescentMode());
-		mapMode.put(R.id.imb_sunrise, new DawnMode());
-		mapMode.put(R.id.imb_eclipse, new EclipseMode());
-		mapMode.put(R.id.imb_forest, new ForestMode());
-		mapMode.put(R.id.imb_sunlight, new SunlightMode());
 	}
 
 	private void initialize() {
@@ -177,12 +196,15 @@ public class MainActivity extends AppCompatActivity {
 
 			swtOnOff.setChecked(false);
 			swtOnOff.setText(offText);
-			mSharedMemory.setTextSwitch(offText);
+			mSharedMemory.setStateSwitch(false);
 			return;
 		}
 
-		swtOnOff.setText(mSharedMemory.getTextSwitch());
-		if (swtOnOff.getText().equals(getString(R.string.on))) {
+		boolean isChecked = mSharedMemory.getStateSwitch();
+		String text = (isChecked) ? getString(R.string.on) : getString(R.string.off);
+
+		swtOnOff.setText(text);
+		if (isChecked) {
 			swtOnOff.setChecked(true);
 			startScreenFilterService();
 		}
@@ -190,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
 	private void initializeSelectedButton() {
 
-		int selectedId = mSharedMemory.getIdSelected();
+		int selectedId = mSharedMemory.getIdImageButtonSelected();
 
 		ImageButton previouslySelectedButton = findViewById(selectedId);
 		previouslySelectedButton.setBackgroundResource(R.color.blue_500);
@@ -218,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, ScreenFilterService.class);
 		startService(intent);
 
-		IColorTemperatureMode mode = mapMode.get(mSharedMemory.getIdSelected());
+		IColorTemperatureMode mode = mapMode.get(mSharedMemory.getIdImageButtonSelected());
 		assert mode != null;
 		Toast.makeText(
 				this,
@@ -235,6 +257,21 @@ public class MainActivity extends AppCompatActivity {
 	private boolean canNotDrawOverlays() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
 				!Settings.canDrawOverlays(MainActivity.this);
+	}
+
+	private void setLocale() {
+
+		mSharedMemory = new SharedMemory(this);
+		int id = mSharedMemory.getIdRadioButtonSelected();
+		String languageCode = mapLanguage.get(id);
+
+		Locale locale = new Locale(languageCode);
+		Locale.setDefault(locale);
+		Configuration configuration = new Configuration();
+		configuration.locale = locale;
+
+		Resources resources = getResources();
+		resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 	}
 
 	//endregion
@@ -279,12 +316,10 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-			if (item.getItemId() == R.id.mni_language) {
-				Intent intent = new Intent(MainActivity.this, LanguageActivity.class);
-				startActivity(intent);
-			}
+			Intent intent = new Intent(MainActivity.this, LanguageActivity.class);
+			startActivityForResult(intent, SELECT_LANGUAGE);
 
-			return false;
+			return true;
 		}
 	}
 
@@ -314,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
 			String text = getString(idText);
 
 			buttonView.setText(text);
-			mSharedMemory.setTextSwitch(text);
+			mSharedMemory.setStateSwitch(isChecked);
 
 			if (! isChecked) {
 				stopScreenFilterService();
@@ -345,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onClick(View v) {
 
-			int idSelected = mSharedMemory.getIdSelected();
+			int idSelected = mSharedMemory.getIdImageButtonSelected();
 
 			ImageButton currentButton = (ImageButton) v;
 			ImageButton previousButton = findViewById(idSelected);
@@ -354,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
 			if (currentButton != previousButton) {
 
 				previousButton.setBackgroundResource(R.color.blue_sky);
-				mSharedMemory.setIdSelected(currentButton.getId());
+				mSharedMemory.setIdImageButtonSelected(currentButton.getId());
 
 				IColorTemperatureMode mode = mapMode.get(idSelected);
 				assert mode != null;

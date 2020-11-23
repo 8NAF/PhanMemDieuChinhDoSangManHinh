@@ -6,6 +6,7 @@
 	<uses-permission android:name="android.permission.SET_WALLPAPER" />
 
 	<application
+		android:configChanges="orientation"
 		android:allowBackup="true"
 		android:fullBackupContent="true"
 		android:hardwareAccelerated="false"
@@ -19,7 +20,9 @@
 			android:name=".ScreenFilterService"
 			android:enabled="true"
 			android:exported="true"
-			android:permission="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Activities -->
+			android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
+
+		<!-- Activities -->
 		<activity android:name=".StartActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -27,7 +30,8 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".MainActivity" />
+		<activity android:name=".MainActivity"
+			android:configChanges="orientation"/>
 		<activity
 			android:name=".WallpaperActivity"
 			android:parentActivityName=".MainActivity"
@@ -37,8 +41,7 @@
 			android:parentActivityName=".WallpaperActivity"
 			android:theme="@style/Theme.DarkActionBar" />
 		<activity android:name=".LanguageActivity"
-			android:theme="@style/Theme.DarkActionBar"
-			android:parentActivityName=".MainActivity"/>
+			android:theme="@style/Theme.DarkActionBar" />
 	</application>
 
 </manifest>

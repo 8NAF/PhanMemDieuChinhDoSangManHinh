@@ -6,6 +6,7 @@
 	tools:context=".LanguageActivity">
 
 	<RadioGroup
+		android:id="@+id/rdg_language"
 		android:layout_margin="10dp"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" >
@@ -15,7 +16,6 @@
 			android:id="@+id/rdb_en"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:checked="true"
 			android:text="@string/en" />
 
 		<RadioButton

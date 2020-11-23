@@ -38,16 +38,19 @@ public class SharedMemory {
 	private void setBlue(int val) {
 		setIntValue("blue", val);
 	}
-	public void setTextSwitch(String text) {
-		sharedPreferences.edit().putString("text_switch", text).apply();
+	public void setStateSwitch(boolean isChecked) {
+		sharedPreferences.edit().putBoolean("state_switch", isChecked).apply();
 	}
-	public void setIdSelected(int id) {
-		setIntValue("id_selected", id);
+	public void setIdImageButtonSelected(int id) {
+		setIntValue("id_image_button", id);
 	}
 	public void setColorTemperatureMode(IColorTemperatureMode colorTemperatureMode) {
 		setRed(colorTemperatureMode.getRed());
 		setGreen(colorTemperatureMode.getGreen());
 		setBlue(colorTemperatureMode.getBlue());
+	}
+	public void setIdRadioButtonSelected(int id) {
+		setIntValue("id_radio_button", id);
 	}
 
 	//endregion
@@ -72,12 +75,15 @@ public class SharedMemory {
 	public int getBlue() {
 		return getValue("blue", new NightMode().getBlue());
 	}
-	public String getTextSwitch() {
+	public boolean getStateSwitch() {
 		String defaultValue = context.getString(R.string.off);
-		return sharedPreferences.getString("text_switch", defaultValue);
+		return sharedPreferences.getBoolean("state_switch", false);
 	}
-	public int getIdSelected() {
-		return getValue("id_selected", R.id.imb_moon);
+	public int getIdImageButtonSelected() {
+		return getValue("id_image_button", R.id.imb_moon);
+	}
+	public int getIdRadioButtonSelected() {
+		return getValue("id_radio_button", R.id.rdb_en);
 	}
 
 	//endregion
