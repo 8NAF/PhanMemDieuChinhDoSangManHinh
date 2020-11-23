@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
 		mSharedMemory = new SharedMemory(this);
 		skbIntensity.setProgress(mSharedMemory.getAlpha());
+		txvIntensity.setText(mSharedMemory.getAlpha() + "");
 
 		initializeSelectedImageButton();
 		initializeColorTemperatureTextView();
@@ -337,7 +338,11 @@ public class MainActivity extends AppCompatActivity {
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-			mSharedMemory.setAlpha(skbIntensity.getProgress());
+
+			int process = skbIntensity.getProgress();
+
+			mSharedMemory.setAlpha(process);
+			txvIntensity.setText(process + "");
 
 			if (swtOnOff.isChecked())
 				startScreenFilterService();
@@ -409,8 +414,6 @@ public class MainActivity extends AppCompatActivity {
 
 			if (swtOnOff.isChecked())
 				startScreenFilterService();
-
-
 		}
 	}
 
