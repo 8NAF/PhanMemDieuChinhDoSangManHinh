@@ -22,8 +22,8 @@ public class NightMode implements IColorTemperatureMode {
 	}
 
 	@Override
-	public int getColorTemperature() {
-		return 3200;
+	public String getColorTemperature() {
+		return "3200K";
 	}
 
 	@NonNull

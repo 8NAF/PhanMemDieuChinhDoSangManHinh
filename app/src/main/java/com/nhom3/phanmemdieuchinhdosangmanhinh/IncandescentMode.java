@@ -21,8 +21,8 @@ public class IncandescentMode implements IColorTemperatureMode {
 	}
 
 	@Override
-	public int getColorTemperature() {
-		return 2700;
+	public String getColorTemperature() {
+		return "2700K";
 	}
 
 	@NonNull

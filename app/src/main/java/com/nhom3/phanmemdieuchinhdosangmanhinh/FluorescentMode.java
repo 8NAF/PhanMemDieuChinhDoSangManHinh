@@ -22,8 +22,8 @@ public class FluorescentMode implements IColorTemperatureMode {
 	}
 
 	@Override
-	public int getColorTemperature() {
-		return 3400;
+	public String getColorTemperature() {
+		return "3400K";
 	}
 
 	@NonNull

@@ -8,7 +8,7 @@ public interface IColorTemperatureMode {
 	int getRed();
 	int getGreen();
 	int getBlue();
-	int getColorTemperature();
+	String getColorTemperature();
 	@NonNull
 	String getName(Context context);
 }

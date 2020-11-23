@@ -19,8 +19,8 @@ public class CandleMode implements IColorTemperatureMode {
 	}
 
 	@Override
-	public int getColorTemperature() {
-		return 1800;
+	public String getColorTemperature() {
+		return "1800K";
 	}
 
 	@Override

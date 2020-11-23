@@ -1,5 +1,6 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -65,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
 	private static final int OVERLAY_PERMISSION_CODE = 0;
 	private static final int SELECT_LANGUAGE = 1;
 
-	private static final HashMap<Integer, IColorTemperatureMode> mapMode;
-	private static final HashMap<Integer, String> mapLanguage;
+	private static HashMap<Integer, IColorTemperatureMode> mapMode;
+	private static HashMap<Integer, String> mapLanguage;
 
 	static {
 
@@ -185,7 +186,8 @@ public class MainActivity extends AppCompatActivity {
 		mSharedMemory = new SharedMemory(this);
 		skbIntensity.setProgress(mSharedMemory.getAlpha());
 
-		initializeSelectedButton();
+		initializeSelectedImageButton();
+		initializeColorTemperatureTextView();
 		initializeSwitchOnOff();
 	}
 
@@ -210,12 +212,20 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	private void initializeSelectedButton() {
+	private void initializeSelectedImageButton() {
 
 		int selectedId = mSharedMemory.getIdImageButtonSelected();
 
 		ImageButton previouslySelectedButton = findViewById(selectedId);
 		previouslySelectedButton.setBackgroundResource(R.color.blue_500);
+	}
+
+
+	private void initializeColorTemperatureTextView() {
+
+		int id = mSharedMemory.getIdImageButtonSelected();
+		IColorTemperatureMode mode = mapMode.get(id);
+		txvColorTemperature.setText(mode.getColorTemperature());
 	}
 
 	private void addOrSetListener() {
@@ -380,10 +390,10 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onClick(View v) {
 
-			int idSelected = mSharedMemory.getIdImageButtonSelected();
+			int idPreviousSelected = mSharedMemory.getIdImageButtonSelected();
 
 			ImageButton currentButton = (ImageButton) v;
-			ImageButton previousButton = findViewById(idSelected);
+			ImageButton previousButton = findViewById(idPreviousSelected);
 
 			currentButton.setBackgroundResource(R.color.blue_500);
 			if (currentButton != previousButton) {
@@ -391,13 +401,16 @@ public class MainActivity extends AppCompatActivity {
 				previousButton.setBackgroundResource(R.color.blue_sky);
 				mSharedMemory.setIdImageButtonSelected(currentButton.getId());
 
-				IColorTemperatureMode mode = mapMode.get(idSelected);
+				IColorTemperatureMode mode = mapMode.get(currentButton.getId());
 				assert mode != null;
 				mSharedMemory.setColorTemperatureMode(mode);
+				txvColorTemperature.setText(mode.getColorTemperature());
 			}
 
 			if (swtOnOff.isChecked())
 				startScreenFilterService();
+
+
 		}
 	}
 

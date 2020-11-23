@@ -21,8 +21,8 @@ public class DawnMode implements IColorTemperatureMode {
 	}
 
 	@Override
-	public int getColorTemperature() {
-		return 2000;
+	public String getColorTemperature() {
+		return "2000K";
 	}
 
 	@NonNull
