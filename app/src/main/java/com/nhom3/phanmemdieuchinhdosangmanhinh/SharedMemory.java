@@ -2,7 +2,6 @@ package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
 
 public class SharedMemory {
@@ -21,48 +20,67 @@ public class SharedMemory {
 	}
 
 	//endregion
+	//region Setters
+
+	private void setIntValue(String value, int v) {
+		sharedPreferences.edit().putInt(value, v).apply();
+	}
+
+	public void setAlpha(int val) {
+		setIntValue("alpha", val);
+	}
+	private void setRed(int val) {
+		setIntValue("red", val);
+	}
+	private void setGreen(int val) {
+		setIntValue("green", val);
+	}
+	private void setBlue(int val) {
+		setIntValue("blue", val);
+	}
+	public void setTextSwitch(String text) {
+		sharedPreferences.edit().putString("text_switch", text).apply();
+	}
+	public void setIdSelected(int id) {
+		setIntValue("id_selected", id);
+	}
+	public void setColorTemperatureMode(IColorTemperatureMode colorTemperatureMode) {
+		setRed(colorTemperatureMode.getRed());
+		setGreen(colorTemperatureMode.getGreen());
+		setBlue(colorTemperatureMode.getBlue());
+	}
+
+	//endregion
+	//region Getters
 
 	private int getValue(String prop, int def) {
 		return sharedPreferences.getInt(prop, def);
 	}
-	private void setValue(String value, int v) {
-		sharedPreferences.edit().putInt(value, v).apply();
-	}
 
+	public int getColor() {
+		return Color.argb(getAlpha(), getRed(), getGreen(), getBlue());
+	}
 	public int getAlpha() {
 		return getValue("alpha", 0x33);
 	}
 	public int getRed() {
-		return getValue("red", 0);
+		return getValue("red", new NightMode().getRed());
 	}
 	public int getGreen() {
-		return getValue("green", 0);
+		return getValue("green", new NightMode().getGreen());
 	}
 	public int getBlue() {
-		return getValue("blue", 0);
-	}
-	public int getColor() {
-		return Color.argb(getAlpha(), getRed(), getGreen(), getBlue());
+		return getValue("blue", new NightMode().getBlue());
 	}
 	public String getTextSwitch() {
 		String defaultValue = context.getString(R.string.off);
 		return sharedPreferences.getString("text_switch", defaultValue);
 	}
+	public int getIdSelected() {
+		return getValue("id_selected", R.id.imb_moon);
+	}
 
-	public void setAlpha(int val) {
-		setValue("alpha", val);
-	}
-	public void setRed(int val) {
-		setValue("red", val);
-	}
-	public void setGreen(int val) {
-		setValue("green", val);
-	}
-	public void setBlue(int val) {
-		setValue("blue", val);
-	}
-	public void setTextSwitch(String text) {
-		sharedPreferences.edit().putString("text_switch", text).apply();
-	}
+	//endregion
+
 
 }

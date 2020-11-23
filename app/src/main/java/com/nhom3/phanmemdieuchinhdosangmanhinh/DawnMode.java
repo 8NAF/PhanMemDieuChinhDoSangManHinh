@@ -1,5 +1,9 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
 public class DawnMode implements IColorTemperatureMode {
 	@Override
 	public int getRed() {
@@ -19,5 +23,11 @@ public class DawnMode implements IColorTemperatureMode {
 	@Override
 	public int getColorTemperature() {
 		return 2000;
+	}
+
+	@NonNull
+	@Override
+	public String getName(Context context) {
+		return context.getString(R.string.dawn_mode);
 	}
 }

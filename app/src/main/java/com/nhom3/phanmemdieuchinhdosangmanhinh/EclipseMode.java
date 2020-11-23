@@ -1,5 +1,9 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
 //5000K
 public class EclipseMode implements IColorTemperatureMode {
 	@Override
@@ -20,5 +24,11 @@ public class EclipseMode implements IColorTemperatureMode {
 	@Override
 	public int getColorTemperature() {
 		return 5000;
+	}
+
+	@NonNull
+	@Override
+	public String getName(Context context) {
+		return context.getString(R.string.eclipse_mode);
 	}
 }

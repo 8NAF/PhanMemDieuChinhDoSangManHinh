@@ -1,5 +1,9 @@
 package com.nhom3.phanmemdieuchinhdosangmanhinh;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
 //3300K
 public class ForestMode implements IColorTemperatureMode {
 	@Override
@@ -20,5 +24,11 @@ public class ForestMode implements IColorTemperatureMode {
 	@Override
 	public int getColorTemperature() {
 		return 3300;
+	}
+
+	@NonNull
+	@Override
+	public String getName(Context context) {
+		return context.getString(R.string.forest_mode);
 	}
 }

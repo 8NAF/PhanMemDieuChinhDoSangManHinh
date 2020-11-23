@@ -3,7 +3,7 @@
 	package="com.nhom3.phanmemdieuchinhdosangmanhinh">
 
 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-	<uses-permission android:name="android.permission.SET_WALLPAPER"/>
+	<uses-permission android:name="android.permission.SET_WALLPAPER" />
 
 	<application
 		android:allowBackup="true"
@@ -14,15 +14,12 @@
 		android:largeHeap="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.NoActionBar">
-
 		<!-- Services -->
 		<service
 			android:name=".ScreenFilterService"
 			android:enabled="true"
 			android:exported="true"
-			android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
-
-		<!-- Activities -->
+			android:permission="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Activities -->
 		<activity android:name=".StartActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -35,9 +32,13 @@
 			android:name=".WallpaperActivity"
 			android:parentActivityName=".MainActivity"
 			android:theme="@style/Theme.DarkActionBar" />
-		<activity android:name=".WallpaperDetailActivity"
+		<activity
+			android:name=".WallpaperDetailActivity"
+			android:parentActivityName=".WallpaperActivity"
+			android:theme="@style/Theme.DarkActionBar" />
+		<activity android:name=".LanguageActivity"
 			android:theme="@style/Theme.DarkActionBar"
-			android:parentActivityName=".WallpaperActivity"/>
+			android:parentActivityName=".MainActivity"/>
 	</application>
 
 </manifest>

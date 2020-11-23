@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,9 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
 	//region Attributes
 
 	private Toolbar tlbMain;
@@ -45,12 +49,22 @@ public class MainActivity extends AppCompatActivity {
 	private SwitchMaterial swtOnOff;
 	private SeekBar skbIntensity;
 
-	private SharedMemory mSharedMemory;
-	private static final int OVERLAY_PERMISSION_CODE = 0;
+	private ImageButton imbMoon;
+	private ImageButton imbCandle;
+	private ImageButton imbIncandescentLamp;
+	private ImageButton imbFluorescentLamp;
+	private ImageButton imbSunrise;
+	private ImageButton imbEclipse;
+	private ImageButton imbForest;
+	private ImageButton imbSunlight;
 
-	private ImageButton preSelectedImageButton;
-	private HashMap<Integer, IColorTemperatureMode> mapColor;
-	private HashMap<Integer, String> mapTitle;
+	private TextView txvColorTemperature;
+	private TextView txvIntensity;
+
+	private SharedMemory mSharedMemory;
+	private HashMap<Integer, IColorTemperatureMode> mapMode;
+
+	private static final int OVERLAY_PERMISSION_CODE = 0;
 
 	//endregion
 	//region Override Methods
@@ -64,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
 		this.mapped();
 
 		//Khởi tạo cho các seek bar và mSharedMemory
-		//Khởi tạo cho switch không có trong method này
-		//Mà nó nằm trong onResume để tránh start service 2 lần không cần thiết
 		this.initialize();
 
 		this.setSupportActionBar(this.tlbMain);
@@ -73,92 +85,20 @@ public class MainActivity extends AppCompatActivity {
 		this.ngvMain.setItemIconTintList(null);
 
 		this.addOrSetListener();
-
-
-		ImageButton imageButton1 = findViewById(R.id.imb_moon);
-		ImageButton imageButton2 = findViewById(R.id.imb_candle);
-		ImageButton imageButton3 = findViewById(R.id.imb_incandescent_lamp);
-		ImageButton imageButton4 = findViewById(R.id.imb_fluorescent_lamp);
-		ImageButton imageButton5 = findViewById(R.id.imb_sunrise);
-		ImageButton imageButton6 = findViewById(R.id.imb_eclipse);
-		ImageButton imageButton7 = findViewById(R.id.imb_forest);
-		ImageButton imageButton8 = findViewById(R.id.imb_sunlight);
-
-		mapColor = new HashMap<>();
-
-		mapColor.put(R.id.imb_moon, new NightMode());
-		mapColor.put(R.id.imb_candle, new CandleMode());
-		mapColor.put(R.id.imb_incandescent_lamp, new IncandescentMode());
-		mapColor.put(R.id.imb_fluorescent_lamp, new FluorescentMode());
-		mapColor.put(R.id.imb_sunrise, new DawnMode());
-		mapColor.put(R.id.imb_eclipse, new EclipseMode());
-		mapColor.put(R.id.imb_forest, new ForestMode());
-		mapColor.put(R.id.imb_sunlight, new SunlightMode());
-
-		mapTitle = new HashMap<>();
-
-		mapTitle.put(R.id.imb_moon, getString(R.string.night_mode));
-		mapTitle.put(R.id.imb_candle, getString(R.string.candle_mode));
-		mapTitle.put(R.id.imb_incandescent_lamp, getString(R.string.incandescent_mode));
-		mapTitle.put(R.id.imb_fluorescent_lamp, getString(R.string.fluorescent_mode));
-		mapTitle.put(R.id.imb_sunrise, getString(R.string.dawn_mode));
-		mapTitle.put(R.id.imb_eclipse, getString(R.string.eclipse_mode));
-		mapTitle.put(R.id.imb_forest, getString(R.string.forest_mode));
-		mapTitle.put(R.id.imb_sunlight, getString(R.string.sunlight_mode));
-
-		SharedPreferences sharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE);
-
-		preSelectedImageButton = findViewById(sharedPreferences.getInt("id", R.id.imv_moon));
-		if (preSelectedImageButton == null)
-			preSelectedImageButton = imageButton1;
-		preSelectedImageButton.setBackgroundResource(R.color.blue_500);
-
-
-		View.OnClickListener onClickListener = new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ImageButton imageButton = (ImageButton) v;
-				imageButton.setBackgroundResource(R.color.blue_500);
-				if (imageButton != preSelectedImageButton) {
-					preSelectedImageButton.setBackgroundResource(R.color.blue_sky);
-					preSelectedImageButton = imageButton;
-				}
-
-				SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("id", Context.MODE_PRIVATE);
-				sharedPreferences.edit().putInt("id", imageButton.getId()).apply();
-
-				IColorTemperatureMode mode = mapColor.get(imageButton.getId());
-				mSharedMemory.setRed(mode.getRed());
-				mSharedMemory.setGreen(mode.getGreen());
-				mSharedMemory.setBlue(mode.getBlue());
-
-				if (swtOnOff.isChecked()) {
-					Toast.makeText(MainActivity.this, mapTitle.get(imageButton.getId()), Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(MainActivity.this, ScreenFilterService.class);
-					MainActivity.this.startService(intent);
-				}
-
-			}
-		};
-
-		imageButton1.setOnClickListener(onClickListener);
-		imageButton2.setOnClickListener(onClickListener);
-		imageButton3.setOnClickListener(onClickListener);
-		imageButton4.setOnClickListener(onClickListener);
-		imageButton5.setOnClickListener(onClickListener);
-		imageButton6.setOnClickListener(onClickListener);
-		imageButton7.setOnClickListener(onClickListener);
-		imageButton8.setOnClickListener(onClickListener);
-
-
-
-
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		this.tloMain.getTabAt(0).select();
+
+		if (canNotDrawOverlays()) {
+			String offText = getString(R.string.off);
+
+			swtOnOff.setChecked(false);
+			swtOnOff.setText(offText);
+			mSharedMemory.setTextSwitch(offText);
+		}
 	}
 
 	@RequiresApi(api = Build.VERSION_CODES.M)
@@ -196,23 +136,43 @@ public class MainActivity extends AppCompatActivity {
 
 		swtOnOff = this.findViewById(R.id.swt_on_off);
 		skbIntensity = this.findViewById(R.id.skb_intensity);
+
+		imbMoon = findViewById(R.id.imb_moon);
+		imbCandle = findViewById(R.id.imb_candle);
+		imbIncandescentLamp = findViewById(R.id.imb_incandescent_lamp);
+		imbFluorescentLamp = findViewById(R.id.imb_fluorescent_lamp);
+		imbSunrise = findViewById(R.id.imb_sunrise);
+		imbEclipse = findViewById(R.id.imb_eclipse);
+		imbForest = findViewById(R.id.imb_forest);
+		imbSunlight = findViewById(R.id.imb_sunlight);
+
+		txvColorTemperature = findViewById(R.id.txv_color_temperature);
+		txvIntensity = findViewById(R.id.txv_intensity);
+
+		mapMode = new HashMap<>();
+
+		mapMode.put(R.id.imb_moon, new NightMode());
+		mapMode.put(R.id.imb_candle, new CandleMode());
+		mapMode.put(R.id.imb_incandescent_lamp, new IncandescentMode());
+		mapMode.put(R.id.imb_fluorescent_lamp, new FluorescentMode());
+		mapMode.put(R.id.imb_sunrise, new DawnMode());
+		mapMode.put(R.id.imb_eclipse, new EclipseMode());
+		mapMode.put(R.id.imb_forest, new ForestMode());
+		mapMode.put(R.id.imb_sunlight, new SunlightMode());
 	}
 
 	private void initialize() {
 
 		mSharedMemory = new SharedMemory(this);
-
 		skbIntensity.setProgress(mSharedMemory.getAlpha());
 
+		initializeSelectedButton();
 		initializeSwitchOnOff();
-
-
 	}
 
 	private void initializeSwitchOnOff() {
 
 		if (canNotDrawOverlays()) {
-
 			String offText = getString(R.string.off);
 
 			swtOnOff.setChecked(false);
@@ -228,6 +188,14 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	private void initializeSelectedButton() {
+
+		int selectedId = mSharedMemory.getIdSelected();
+
+		ImageButton previouslySelectedButton = findViewById(selectedId);
+		previouslySelectedButton.setBackgroundResource(R.color.blue_500);
+	}
+
 	private void addOrSetListener() {
 		this.ngvMain.setNavigationItemSelectedListener(new ngvMain_NavigationItemSelectedListener());
 		this.dwlMain.addDrawerListener(new dwlMain_DrawerListener());
@@ -235,11 +203,28 @@ public class MainActivity extends AppCompatActivity {
 
 		skbIntensity.setOnSeekBarChangeListener(new skbIntensity_OnSeekBarChangeListener());
 		swtOnOff.setOnCheckedChangeListener(new swtOnOff_OnCheckedChangeListener());
+
+		imbMoon.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbCandle.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbIncandescentLamp.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbFluorescentLamp.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbSunrise.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbEclipse.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbForest.setOnClickListener(new ColorTemperatureMode_OnClickListener());
+		imbSunlight.setOnClickListener(new ColorTemperatureMode_OnClickListener());
 	}
 
 	private void startScreenFilterService() {
 		Intent intent = new Intent(this, ScreenFilterService.class);
 		startService(intent);
+
+		IColorTemperatureMode mode = mapMode.get(mSharedMemory.getIdSelected());
+		assert mode != null;
+		Toast.makeText(
+				this,
+				mode.getName(this),
+				Toast.LENGTH_SHORT
+		).show();
 	}
 
 	private void stopScreenFilterService() {
@@ -293,6 +278,12 @@ public class MainActivity extends AppCompatActivity {
 
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+			if (item.getItemId() == R.id.mni_language) {
+				Intent intent = new Intent(MainActivity.this, LanguageActivity.class);
+				startActivity(intent);
+			}
+
 			return false;
 		}
 	}
@@ -319,8 +310,8 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-			int id = isChecked ? R.string.on : R.string.off;
-			String text = getString(id);
+			int idText = isChecked ? R.string.on : R.string.off;
+			String text = getString(idText);
 
 			buttonView.setText(text);
 			mSharedMemory.setTextSwitch(text);
@@ -346,6 +337,32 @@ public class MainActivity extends AppCompatActivity {
 				Uri.parse("package:" + getPackageName())
 			);
 			startActivityForResult(promptTheUserToGrant, OVERLAY_PERMISSION_CODE);
+		}
+	}
+
+	private class ColorTemperatureMode_OnClickListener implements View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+
+			int idSelected = mSharedMemory.getIdSelected();
+
+			ImageButton currentButton = (ImageButton) v;
+			ImageButton previousButton = findViewById(idSelected);
+
+			currentButton.setBackgroundResource(R.color.blue_500);
+			if (currentButton != previousButton) {
+
+				previousButton.setBackgroundResource(R.color.blue_sky);
+				mSharedMemory.setIdSelected(currentButton.getId());
+
+				IColorTemperatureMode mode = mapMode.get(idSelected);
+				assert mode != null;
+				mSharedMemory.setColorTemperatureMode(mode);
+			}
+
+			if (swtOnOff.isChecked())
+				startScreenFilterService();
 		}
 	}
 

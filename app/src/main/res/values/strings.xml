@@ -27,4 +27,6 @@
 	<string name="sunlight_mode">Sunlight</string>
 	<string name="color_temperature">Color Temperature</string>
 	<string name="intensity">Intensity</string>
+	<string name="vn" translatable="false">Tiếng Việt</string>
+	<string name="en" translatable="false">English</string>
 </resources>
