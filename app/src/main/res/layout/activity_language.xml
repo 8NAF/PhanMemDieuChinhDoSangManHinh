@@ -24,7 +24,7 @@
 			android:id="@+id/rdb_vn"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/vn" />
+			android:text="@string/vi" />
 
 	</RadioGroup>
 </LinearLayout>

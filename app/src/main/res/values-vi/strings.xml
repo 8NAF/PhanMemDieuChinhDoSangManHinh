@@ -23,9 +23,12 @@
 	<string name="dawn_mode">Bình minh</string>
 	<string name="on">BẬT</string>
 	<string name="night_mode">Ban đêm</string>
-	<string name="blue_light">Ánh sáng xanh là gì ?</string>
+	<string name="define_blue_light_title">Ánh sáng xanh là gì ?</string>
 	<string name="forest_mode">Ánh sáng trong rừng</string>
 	<string name="sunlight_mode">Ánh sáng mặt trời</string>
 	<string name="candle_mode">Ánh sáng đèn nến</string>
 	<string name="version">Phiên bản 1.0</string>
+	<string name="harms_blue_light_title">Tác hại của ánh sáng xanh</string>
+	<string name="define_of_blue_light">Ánh sáng xanh có nhiệt độ cao (trên 5000K) và giúp chúng ta tỉnh táo. Bước sóng của nó rất ngắn từ 380 đến 550 nm.</string>
+	<string name="harms_of_blue_light">Các nghiên cứu khoa học cho thấy rằng ánh sáng xanh gây ra mối đe dọa nghiêm trọng đối với neuron võng mạc và gây ra thoái hóa điểm vàng. Tiếp xúc với ánh sáng xanh ngăn chặn sự bài tiết melatonin, từ đó ảnh hưởng đến nhịp sinh học</string>
 </resources>

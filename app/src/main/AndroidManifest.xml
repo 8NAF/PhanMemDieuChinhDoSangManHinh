@@ -15,8 +15,8 @@
 		android:largeHeap="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.NoActionBar">
-		<activity android:name=".AboutUsActivity"></activity>
-		<!-- Services -->
+		<activity android:name=".BlueLightActivity"></activity>
+		<activity android:name=".AboutUsActivity" /> <!-- Services -->
 		<service
 			android:name=".ScreenFilterService"
 			android:enabled="true"

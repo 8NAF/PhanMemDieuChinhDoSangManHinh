@@ -4,7 +4,7 @@
 	<item
 		android:icon="@drawable/ic_info"
 		android:id="@+id/mni_blue_light"
-		android:title="@string/blue_light" />
+		android:title="@string/define_blue_light_title" />
 	<item
 		android:id="@+id/mni_language"
 		android:icon="@drawable/ic_language"

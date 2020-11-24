@@ -334,6 +334,12 @@ public class MainActivity extends AppCompatActivity {
 					break;
 				}
 
+				case R.id.mni_blue_light: {
+					Intent intent = new Intent(MainActivity.this, BlueLightActivity.class);
+					startActivity(intent);
+					break;
+				}
+
 			}
 
 

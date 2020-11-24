@@ -10,8 +10,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="purple">#C267D3</color>
+    <color name="purple">#4e3590</color>
     <color name="pink">#F43FCD</color>
     <color name="gray">#C3B8B8</color>
     <color name="moon_yellow">#faeeb8</color>
+    <color name="blue_sky_2">#4385f6</color>
 </resources>

@@ -245,7 +245,6 @@
 		android:id="@+id/skb_intensity"
 		android:layout_width="0dp"
 		android:layout_height="35dp"
-		android:layout_marginStart="6dp"
 		android:layout_marginTop="5dp"
 		android:layout_marginEnd="20dp"
 		android:max="200"

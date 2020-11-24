@@ -4,7 +4,7 @@
 	<string name="power_button">Power buttoon image</string>
 	<string name="home">Home</string>
 	<string name="wallpaper">Wallpaper</string>
-	<string name="blue_light">What is blue light ?</string>
+	<string name="define_blue_light_title">What is blue light ?</string>
 	<string name="language">Language</string>
 	<string name="about_us">About us</string>
 	<string name="on">On</string>
@@ -27,7 +27,10 @@
 	<string name="sunlight_mode">Sunlight</string>
 	<string name="color_temperature">Color Temperature</string>
 	<string name="intensity">Intensity</string>
-	<string name="vn" translatable="false">Tiếng Việt</string>
+	<string name="vi" translatable="false">Tiếng Việt</string>
 	<string name="en" translatable="false">English</string>
-	<string name="version">Version 1.0</string>
+	<string name="version">Version 1.0.0</string>
+	<string name="define_of_blue_light">The color temperature of blue light is high (over 5000K), and it will keep people sober. Blue light is very short and visible wavelength between 380-550 nm</string>
+	<string name="harms_of_blue_light">Blue light will influence your circadian rhythms by inhibiting melatonin. Blue light has been scientifically proven to do harm to your eyes. It poses a serious threat to your retinal neurons.</string>
+	<string name="harms_blue_light_title">Harms of blue light</string>
 </resources>
