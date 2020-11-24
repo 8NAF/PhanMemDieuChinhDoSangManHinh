@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".AboutUsActivity">
+
+	<ImageView
+		android:id="@+id/imv_icon_app"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.497"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.142"
+		app:srcCompat="@drawable/ic_app" />
+
+	<TextView
+		android:id="@+id/txv_version"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="@string/version"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/imv_icon_app" />
+
+	<LinearLayout
+		android:id="@+id/lnl_gmail"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="60dp"
+		android:layout_marginTop="78dp"
+		android:orientation="horizontal"
+		android:weightSum="10"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/txv_version">
+
+		<ImageView
+			android:id="@+id/imv_gmail"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_weight="2"
+			app:srcCompat="@drawable/ic_gmail" />
+
+		<TextView
+			android:id="@+id/txv_gmail"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="8"
+			android:text="example@gmail.com" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/lnl_phone"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="60dp"
+		android:layout_marginTop="10dp"
+		android:orientation="horizontal"
+		android:weightSum="10"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/lnl_gmail">
+
+		<ImageView
+			android:id="@+id/imv_phone"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_weight="2"
+			app:srcCompat="@drawable/ic_phone" />
+
+		<TextView
+			android:id="@+id/txv_phone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="8"
+			android:text="0123456789" />
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

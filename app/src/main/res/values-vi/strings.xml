@@ -27,4 +27,5 @@
 	<string name="forest_mode">Ánh sáng trong rừng</string>
 	<string name="sunlight_mode">Ánh sáng mặt trời</string>
 	<string name="candle_mode">Ánh sáng đèn nến</string>
+	<string name="version">Phiên bản 1.0</string>
 </resources>

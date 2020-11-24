@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int OVERLAY_PERMISSION_CODE = 0;
 	private static final int SELECT_LANGUAGE = 1;
 
-	private static HashMap<Integer, IColorTemperatureMode> mapMode;
-	private static HashMap<Integer, String> mapLanguage;
+	private static final HashMap<Integer, IColorTemperatureMode> mapMode;
 
 	static {
 
@@ -81,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
 			mapMode.put(R.id.imb_eclipse, new EclipseMode());
 			mapMode.put(R.id.imb_forest, new ForestMode());
 			mapMode.put(R.id.imb_sunlight, new SunlightMode());
-
-			mapLanguage = new HashMap<>();
-
-			mapLanguage.put(R.id.rdb_en, "en");
-			mapLanguage.put(R.id.rdb_vn, "vi");
 	}
 
 	//endregion
@@ -273,8 +267,7 @@ public class MainActivity extends AppCompatActivity {
 	private void setLocale() {
 
 		mSharedMemory = new SharedMemory(this);
-		int id = mSharedMemory.getIdRadioButtonSelected();
-		String languageCode = mapLanguage.get(id);
+		String languageCode = mSharedMemory.getLanguageCode();
 
 		Locale locale = new Locale(languageCode);
 		Locale.setDefault(locale);
@@ -327,8 +320,23 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-			Intent intent = new Intent(MainActivity.this, LanguageActivity.class);
-			startActivityForResult(intent, SELECT_LANGUAGE);
+
+			switch (item.getItemId()) {
+				case R.id.mni_language: {
+					Intent intent = new Intent(MainActivity.this, LanguageActivity.class);
+					startActivityForResult(intent, SELECT_LANGUAGE);
+					break;
+				}
+
+				case R.id.mni_about_us: {
+					Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
+					startActivity(intent);
+					break;
+				}
+
+			}
+
+
 
 			return true;
 		}

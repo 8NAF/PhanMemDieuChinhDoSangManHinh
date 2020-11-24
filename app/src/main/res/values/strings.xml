@@ -29,4 +29,5 @@
 	<string name="intensity">Intensity</string>
 	<string name="vn" translatable="false">Tiếng Việt</string>
 	<string name="en" translatable="false">English</string>
+	<string name="version">Version 1.0</string>
 </resources>

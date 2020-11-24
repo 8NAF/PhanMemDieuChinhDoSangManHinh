@@ -49,8 +49,8 @@ public class SharedMemory {
 		setGreen(colorTemperatureMode.getGreen());
 		setBlue(colorTemperatureMode.getBlue());
 	}
-	public void setIdRadioButtonSelected(int id) {
-		setIntValue("id_radio_button", id);
+	public void setLanguageCode(String languageCode) {
+		sharedPreferences.edit().putString("language_code", languageCode).apply();
 	}
 
 	//endregion
@@ -82,8 +82,8 @@ public class SharedMemory {
 	public int getIdImageButtonSelected() {
 		return getValue("id_image_button", R.id.imb_moon);
 	}
-	public int getIdRadioButtonSelected() {
-		return getValue("id_radio_button", R.id.rdb_en);
+	public String getLanguageCode() {
+		return sharedPreferences.getString("language_code", "en");
 	}
 
 	//endregion

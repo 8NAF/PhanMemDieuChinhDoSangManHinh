@@ -6,8 +6,8 @@
 	<uses-permission android:name="android.permission.SET_WALLPAPER" />
 
 	<application
-		android:configChanges="orientation"
 		android:allowBackup="true"
+		android:configChanges="orientation"
 		android:fullBackupContent="true"
 		android:hardwareAccelerated="false"
 		android:icon="@drawable/ic_app"
@@ -15,14 +15,13 @@
 		android:largeHeap="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.NoActionBar">
+		<activity android:name=".AboutUsActivity"></activity>
 		<!-- Services -->
 		<service
 			android:name=".ScreenFilterService"
 			android:enabled="true"
 			android:exported="true"
-			android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
-
-		<!-- Activities -->
+			android:permission="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Activities -->
 		<activity android:name=".StartActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -30,8 +29,9 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".MainActivity"
-			android:configChanges="orientation"/>
+		<activity
+			android:name=".MainActivity"
+			android:configChanges="orientation" />
 		<activity
 			android:name=".WallpaperActivity"
 			android:parentActivityName=".MainActivity"
@@ -40,7 +40,8 @@
 			android:name=".WallpaperDetailActivity"
 			android:parentActivityName=".WallpaperActivity"
 			android:theme="@style/Theme.DarkActionBar" />
-		<activity android:name=".LanguageActivity"
+		<activity
+			android:name=".LanguageActivity"
 			android:theme="@style/Theme.DarkActionBar" />
 	</application>
 
